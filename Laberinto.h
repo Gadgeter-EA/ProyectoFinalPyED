@@ -69,7 +69,7 @@ class Fase1: public Laberinto{
             maze[0][0].setWays(false, true, false, true);
             maze[0][1].setWays(true, false, false, false);
             maze[0][2].setWays(false, false, false, true);
-            maze[1][0].setWays(false, true, true, false);
+            maze[1][0].setWays(false, false, true, false);
             maze[1][1].setWays(true, true, false, false);
             maze[1][2].setWays(false, false, true, false);
 
@@ -86,8 +86,8 @@ class Fase1: public Laberinto{
 
         void runGame(){
 
-            int option, i;
-            bool goodOption = true;
+            int option;
+            bool goodOption;
 
             while(true){
 
@@ -149,7 +149,8 @@ class Fase1: public Laberinto{
                             break;
 
                         case 5:
-                            player->inventario.showInventory();
+                            system("cls");
+                            player->inventario.useIventory(player);
                             goodOption = true;
                             system("pause");
                             system("cls");
@@ -190,7 +191,7 @@ class Fase1: public Laberinto{
 
             }
             else if(x == 0 && y==1){ // GNOMO
-                if(maze[x][y].getfirstTime() && tutorial == intro){ // GNOMO INTRO
+                if(maze[x][y].getfirstTime() && tutorial == intro){ // GNOMO
 
                     int option = 0;
                     bool passTree = false;
@@ -223,7 +224,7 @@ class Fase1: public Laberinto{
                     system("pause");
                     system("cls");
 
-                    dialog = "GNOMO: Mira..., hagamos un trato. Llevo mucho sin comer...\nSi vas al arbol que esta por aqui cerca y me traes una manzana, te puede decir unas cosillas que te seran utiles..\nTrato? Ahora..LARGO!\n";
+                    dialog = "GNOMO: Mira..., hagamos un trato. Llevo mucho sin comer...\nSi vas al arbol que esta por aqui cerca y me traes una manzana, te puedo decir unas cosillas que te seran utiles..\nTrato? Ahora..LARGO!\n";
                     writeDialogs(dialog);
                     system("pause");
                     system("cls");
@@ -233,6 +234,47 @@ class Fase1: public Laberinto{
                     system("pause");
                     system("cls");
                     maze[x][y].setfirstTime(false);
+                    tutorial = mid;
+                }
+
+            }else if(x == 1 && y == 0){ // Cuarto del árbol
+
+                if(maze[x][y].getfirstTime() && tutorial == intro){
+                    string dialog = "La habitacion no se parece en nada a la anterior\nParece una especie de bosque mistico...\nEn el medio del cuarto hay un arbol con grandes manzanas\n";
+                    writeDialogs(dialog);
+                    system("pause");
+                    system("cls");
+                    maze[x][y].setfirstTime(false);
+                }
+                else if(maze[x][y].getfirstTime() && tutorial == mid){
+                    string dialog = "La habitacion no se parece en nada a la anterior\nParece una especie de bosque mistico...\n";
+                    writeDialogs(dialog);
+                    system("pause");
+                    system("cls");
+
+                    dialog = "Hay un arbol con grandes manzanas en el centro, debe ser el que menciono el duende...\n";
+                    writeDialogs(dialog);
+                    system("pause");
+                    system("cls");
+
+                    dialog = "Te acercas al arbol...\nEscalas para tomar una de las manzanas....\nAgregado objeto de mision Manzana al inventario\n";
+                    // agregamos manzana al inventario
+                    writeDialogs(dialog);
+                    system("pause");
+                    system("cls");
+                    maze[x][y].setfirstTime(false);
+                }
+                else if(!maze[x][y].getfirstTime() && tutorial == mid){
+
+                    string dialog = "El arbol con grandes manzanas en el centro, debe ser el que menciono el duende...\n";
+                    writeDialogs(dialog);
+                    system("pause");
+                    system("cls");
+                    dialog = "Te acercas al arbol...\nEscalas para tomar una de las manzanas....\nAgregado objeto de mision Manzana al inventario\n";
+                    // agregamos manzana al inventario
+                    writeDialogs(dialog);
+                    system("pause");
+                    system("cls");
                 }
             }
         }
@@ -243,7 +285,7 @@ class Fase1: public Laberinto{
             while ( dialog[i] != '\0')
             {
                 cout << dialog[i];
-                Sleep(50);
+                Sleep(25);
                 i++;
             };
         }

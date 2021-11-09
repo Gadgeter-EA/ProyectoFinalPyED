@@ -11,9 +11,7 @@ Player::Player(string name, int lives, int shield){
     }
 }
 
-Player::~Player(){
-
-}
+Player::~Player()= default;
 
 void Player::takeDamage() {
     if(!shield.empty()){
@@ -33,15 +31,17 @@ void Player::heal(){
     if(life.size() < maxLife){
 
         life.push(1);
-    }
-}
 
+    }else cout << "Ya tienes la vida al maximo, desperdiciaste la pocion..." << endl;
+
+}
 
 void Player::shieldPlayer() {
     if(shield.size() < maxShield){
 
         shield.push(1);
-    }
+
+    }else cout << "Ya tienes el escudo al maximo, desperdeciaste el escudo..." << endl;
 }
 
 int Player::getShield(){
@@ -66,8 +66,8 @@ Inventory::~Inventory(){
 }
 
 void Inventory::clear(){
-    while(head){
 
+    while(head){
         Node* lTemp = head->next;
         delete head;
         head = lTemp;
@@ -101,10 +101,98 @@ void Inventory::showInventory() {
 
         cout << "(" << temp->id << ")";
         temp->item->info();
+        cout << endl;
 
         temp = temp->next;
     }
+}
 
+void Inventory::useConsumable(string ID, Player* player){
+
+    Node* temp = head;
+    Node* father = NULL;
+    bool founded = false;
+
+    while(temp != NULL){
+
+        if(temp->id == ID){
+
+            founded = true;
+
+            if(temp->item->getisObjectMision()){
+                cout << "Esto parece importante, no deberia de hacerlo..." << endl;
+            }
+            else{
+                temp->item->use(player);
+                //Borrar el nodo del objeto consumido
+
+                if(father){
+                    if(father->next != NULL){
+                        temp = father->next;
+                        father->next = temp->next;
+
+                        if(temp ==tail){
+                            tail = father;
+                        }
+                        delete temp;
+                    }
+                }
+                else{
+
+                    if(head){
+
+                        temp = head->next;
+
+                        if(head == tail){
+                            tail = NULL;
+                        }
+                        delete head;
+                        head = temp;
+                    }
+                }
+
+            }
+            break;
+        }
+        father = temp;
+        temp = temp->next;
+    }
+    if(!founded) cout << "No existe el ID ingresado" << endl;
+}
+
+void Inventory::useIventory(Player* player) {
+
+    int option = 0; bool enough = false;
+    string id;
+
+    do{
+        cout << "1) Mostrar objetos del inventario" << endl;
+        cout << "2) Usar algun objeto del inventario" << endl << endl;
+        cout << "Que deberia hacer?: ";
+        cin >> option;
+
+        switch(option){
+            case 1: showInventory(); break;
+            case 2:
+                cout << endl << "Ingresa el ID del objeto a usar: ";
+                cin.ignore();
+                getline(cin, id);
+                useConsumable(id, player);
+                break;
+            default:
+                cout << "Ponte serio..." << endl;
+        }
+
+        cout << endl << "1) Si" << endl;
+        cout << "2) Cualquier otro numero, No" << endl << endl;
+        cout << "Cerrar inventario?: ";
+        cin >> option;
+
+        if(option == 1){
+            enough = true;
+        }else continue;
+
+    }while(!enough);
 
 }
 
@@ -144,6 +232,10 @@ ObjInv::~ObjInv()= default;
 void ObjInv::info() {
     cout << "Nombre: " << name << endl;
     cout << "Descripcion: " << description << endl;
+}
+
+void ObjInv::use(Player * player){
+
 }
 
 string ObjInv::getName() {

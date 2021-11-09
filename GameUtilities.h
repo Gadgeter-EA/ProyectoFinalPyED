@@ -9,6 +9,8 @@
 
 using namespace std;
 
+class Player;
+
 class ObjInv {
 
 private:
@@ -20,7 +22,7 @@ public:
     ObjInv(string name,string description, bool isObjectMision = false);
     ~ObjInv();
     void info();
-    void use();
+    virtual void use(Player * player);
     string getName();
     bool getisObjectMision();
 };
@@ -43,9 +45,10 @@ public:
     ~Inventory();
     void clear();
     void addItem(ObjInv* item);
+    void addObjMision(string name, string description);
+    void useConsumable(string ID, Player* player);
     void showInventory();
-    void useConsumable(string ID);
-    void useIventory();
+    void useIventory(Player* player);
 
 private:
     Node* getNew(ObjInv* item);
@@ -78,7 +81,7 @@ public:
 
     Potion(string name,string description);
     ~Potion();
-    void use(Player* player);
+    void use(Player* player) override;
 };
 
 class Shield : public ObjInv{
@@ -86,6 +89,5 @@ class Shield : public ObjInv{
 public:
     Shield(string name,string description);
     ~Shield();
-    void use(Player* player);
+    void use(Player* player) override;
 };
-
