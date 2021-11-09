@@ -16,3 +16,4 @@ Makefile
 *.cbp
 cmake*
 .vscode
+*.exe
