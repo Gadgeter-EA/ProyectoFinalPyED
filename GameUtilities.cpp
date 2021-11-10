@@ -89,6 +89,12 @@ void Inventory::addItem(ObjInv* item){
     }
 }
 
+void Inventory::addObjMision(string name, string description) {
+
+    ObjInv* temp = new ObjInv(name, description, true);
+    addItem(temp);
+}
+
 void Inventory::showInventory() {
 
     Node* temp = head;
@@ -120,9 +126,13 @@ void Inventory::useConsumable(string ID, Player* player){
             founded = true;
 
             if(temp->item->getisObjectMision()){
+
                 cout << "Esto parece importante, no deberia de hacerlo..." << endl;
+                system("pause");
+                system("cls");
             }
             else{
+                cout << temp->item->getName() << " usado(a)" << endl;
                 temp->item->use(player);
                 //Borrar el nodo del objeto consumido
 
@@ -170,11 +180,12 @@ void Inventory::useIventory(Player* player) {
         cout << "2) Usar algun objeto del inventario" << endl << endl;
         cout << "Que deberia hacer?: ";
         cin >> option;
+        system("cls");
 
         switch(option){
             case 1: showInventory(); break;
             case 2:
-                cout << endl << "Ingresa el ID del objeto a usar: ";
+                cout << endl << "Ingresa el codigo runico del objeto a usar: ";
                 cin.ignore();
                 getline(cin, id);
                 useConsumable(id, player);
@@ -190,10 +201,68 @@ void Inventory::useIventory(Player* player) {
 
         if(option == 1){
             enough = true;
-        }else continue;
-
+        }else system("cls");
     }while(!enough);
 
+}
+
+bool Inventory::searchObjMision(string name) {
+    Node* temp = head;
+    bool itExits = false;
+
+    while(temp != NULL){
+
+        if(temp->item->getName() == name){
+            itExits = true;
+            return itExits;
+
+        }
+
+        temp = temp->next;
+    }
+    return itExits;
+}
+
+void Inventory::delObjMision(string name) {
+
+    Node* temp = head;
+    Node* father = NULL;
+
+    while(temp != NULL){
+
+        if(temp->item->getName() == name){
+
+            delete temp->item;
+
+            if(father){
+                if(father->next != NULL){
+                    temp = father->next;
+                    father->next = temp->next;
+
+                    if(temp == tail){
+                        tail = father;
+                    }
+                    delete temp;
+                }
+            }
+            else{
+
+                if(head){
+
+                    temp = head->next;
+
+                    if(head == tail){
+                        tail = NULL;
+                    }
+                    delete head;
+                    head = temp;
+                }
+            }
+            break;
+        }
+        father = temp;
+        temp = temp->next;
+    }
 }
 
 Node* Inventory::getNew(ObjInv* item) {

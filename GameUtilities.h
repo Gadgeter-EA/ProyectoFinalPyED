@@ -49,6 +49,8 @@ public:
     void useConsumable(string ID, Player* player);
     void showInventory();
     void useIventory(Player* player);
+    bool searchObjMision(string name);
+    void delObjMision(string name);
 
 private:
     Node* getNew(ObjInv* item);
