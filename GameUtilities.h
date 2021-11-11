@@ -75,12 +75,12 @@ public:
     int getLife();
     int getShield();
     string getName();
+    void setMaxShield(int maxshield);
 };
 
 class Potion : public ObjInv{
 
 public:
-
     Potion(string name,string description);
     ~Potion();
     void use(Player* player) override;

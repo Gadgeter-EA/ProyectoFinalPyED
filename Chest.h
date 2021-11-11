@@ -38,7 +38,7 @@ class Chest {
                 }
                 else{
                     player->takeDamage();
-                    cout << "Han salido flechas del cofre, pierdes un a vida." << endl;
+                    cout << "Han salido flechas dispardas del cofre, pierdes un a vida." << endl;
                     return NULL;// Le dispara flechas al jugador, hiriendolo
                 }
             }

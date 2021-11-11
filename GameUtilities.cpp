@@ -21,7 +21,9 @@ void Player::takeDamage() {
         life.pop();
 
         if(life.empty()){
-            cout << "GAME OVER" << endl;
+            system("cls");
+            cout << "Haz muerto...\n\nGAME OVER" << endl;
+            system("pause");
             exit(1);
         }
     }
@@ -56,6 +58,10 @@ string Player::getName() {
     return name;
 }
 
+void Player::setMaxShield(int maxshield) {
+    maxShield = maxshield;
+}
+
 Inventory::Inventory() {
     head = NULL;
     tail = NULL;
@@ -69,6 +75,7 @@ void Inventory::clear(){
 
     while(head){
         Node* lTemp = head->next;
+        if(head->item) delete head->item;
         delete head;
         head = lTemp;
     }
@@ -167,7 +174,7 @@ void Inventory::useConsumable(string ID, Player* player){
         father = temp;
         temp = temp->next;
     }
-    if(!founded) cout << "No existe el ID ingresado" << endl;
+    if(!founded) cout << "No existe el codigo runico" << endl;
 }
 
 void Inventory::useIventory(Player* player) {

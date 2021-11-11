@@ -5,7 +5,7 @@
 
 using namespace std;
 
-enum PQuest {intro, mid, mid2, end};
+enum PQuest {intro, mid, mid2, finall};
 enum Elementals {water, fire, ice};
 
 class Laberinto {
@@ -13,7 +13,7 @@ class Laberinto {
     protected:
         CuartoDef maze[5][5];
         int x, y; // Coordenadas del jugador
-        PQuest quest[3] = {intro};
+        PQuest quest[2] = {intro};
 
     public:
         Laberinto(){
@@ -37,7 +37,7 @@ class Fase1: public Laberinto{
 
             string playerName;
 
-            cout << "Bienvenido a la Pre-Alpha de El MISTERIO DEL REY CARMESI" << endl;
+            cout << "Alpha" << endl;
             system("pause");
             system("cls");
 
@@ -71,7 +71,10 @@ class Fase1: public Laberinto{
             maze[0][2].setWays(false, false, false, true);
             maze[1][0].setWays(false, false, true, false);
             maze[1][1].setWays(true, true, false, false);
-            maze[1][2].setWays(false, false, true, false);
+            maze[1][2].setWays(true, false, true, false);
+            maze[2][0].setWays(false, true, false, false);
+            maze[2][1].setWays(true, true, false, false);
+            maze[2][2].setWays(true, true, false, false);
 
             string dialog = "\"El mundo es solo para aquellos que realmente lo valoran, Seras digno de el?\"\n"
                             "El frio penetrante del ambiente retuerce tus huesos, abres los ojos y de una profunda oscuridad poco a poco logras vislumbrar el ambiente que tienes frente a ti.\n";
@@ -258,7 +261,7 @@ class Fase1: public Laberinto{
                         switch (option) {
                             case 1: dialog = "GNOMO: OYE NO SEAS GROSERO, SOY UNA CRIATURA LEGENDARIA Y NO PERMITIRE ESE COMPORTAMIENTO CONTRA MI!\n"; passTree = true; break;
                             case 2: dialog = "GNOMO: Pues de donde vengo nadie es tan alto y con la cara tan extrania.\n"; passTree = true; break;
-                            case 3: dialog = "GNOMO: No desesperes joven viajante..."; passTree = true; break;
+                            case 3: dialog = "GNOMO: No desesperes joven viajante...\n"; passTree = true; break;
                             default:  option = 1 + (rand() % (3+1)-1);
                         }
                     }
@@ -295,6 +298,7 @@ class Fase1: public Laberinto{
                     writeDialogs(dialog);
                     system("pause");
                     system("cls");
+
                     maze[x][y].setfirstTime(false);
                     tutorial = mid;
                 }
@@ -314,7 +318,7 @@ class Fase1: public Laberinto{
                     system("cls");
 
                     dialog = "Le ofreces la manzana al gnomo y este te la arrebata con locura de la mano y la devora de un solo mordisco,\n"
-                             "despues de unos segundos el gnomo se pone de un color palido y a continuacion su piel comienza a descarapelarse de su cara y poco a poco.\n\n";
+                             "despues de unos segundos el gnomo se pone de un color palido y a continuacion su piel comienza a descarapelarse de su cara poco a poco.\n\n";
                     writeDialogs(dialog);
                     cout << "1)QUE ESTA PASANDO!" << endl;
                     cout << "2)Ughh que asco.... alejate de mi." << endl;
@@ -443,7 +447,7 @@ class Fase1: public Laberinto{
                     system("cls");
 
 
-                    dialog = "WINKLIPET: Explora el laberinto, adentrate en el, conoce a mas gente y resuelve todo lo que te eche en cara\n"
+                    dialog = "WINKLIPET: Explora el laberinto, adentrate en el, conoce a mas gente y resuelve todo lo que te eche en cara.\n"
                              "Solo asi podras superar la prueba de su majestad del gran REY CARMESI...\n";
                     writeDialogs(dialog);
                     system("pause");
@@ -488,8 +492,8 @@ class Fase1: public Laberinto{
                     system("pause");
                     system("cls");
 
-                    dialog = "Te acercas al arbol y tomas una de sus manzanas en la cual puedes ver tu reflejo gracias a su brillante superficie...\nAgregado objeto de mision Manzana al inventario\n";
-                    player->inventario.addObjMision("Manzana", "Manza que te pidio el WINKLIPET.");
+                    dialog = "Te acercas al arbol y tomas una de sus manzanas en la cual puedes ver tu reflejo gracias a su brillante superficie...\nAgregado objeto de mision Manzana al inventario.\n";
+                    player->inventario.addObjMision("Manzana", "Manzana que te pidio el WINKLIPET.");
                     writeDialogs(dialog);
                     system("pause");
                     system("cls");
@@ -503,13 +507,21 @@ class Fase1: public Laberinto{
                     system("cls");
 
                     dialog = "Te acercas al arbol y tomas una de sus manzanas en la cual puedes ver tu reflejo gracias a su brillante superficie...\nAgregado objeto de mision Manzana al inventario.\n";
-                    player->inventario.addObjMision("Manzana", "Manza que te pidio el WINKLIPET.");
+                    player->inventario.addObjMision("Manzana", "Manzana que te pidio el WINKLIPET.");
                     writeDialogs(dialog);
                     system("pause");
                     system("cls");
                     maze[x][y].setfirstTime(false);
                 }
-            }else if(x = 1, y = 1){
+                else if(!maze[x][y].getfirstTime() && tutorial == finall){
+
+                    string dialog = "La puerta que antes estaba sellada por troncos de obsidiana esta ahora abierta.\n";
+                    writeDialogs(dialog);
+                    system("pause");
+                    system("cls");
+                }
+
+            }else if(x == 1 && y == 1){
 
                 if(maze[x][y].getfirstTime()){
 
@@ -524,7 +536,7 @@ class Fase1: public Laberinto{
                     system("pause");
                     system("cls");
 
-                    dialog = "De todos modos, buscas en tu muchila algo que te pueda ayudar en caso de emergencia, pero solo encuentras los tres frascos que habia al comienzo de tu viaje,\n"
+                    dialog = "De todos modos, buscas en tu mochila algo que te pueda ayudar en caso de emergencia, pero solo encuentras los tres frascos que habia al comienzo de tu viaje,\n"
                              "dentro de los cuales hay piedras de diferente color, unas son de color rojo, unas de color azul y otras de color morado, en uno de los frascos hay una nota...\n";
                     writeDialogs(dialog);
                     system("pause");
@@ -536,7 +548,7 @@ class Fase1: public Laberinto{
                              "-Azules (agua)\n"
                              "-Moradas (hielo)\n"
                              "Para ganar una batalla deberas elegir un tipo de piedra con la que atacaras a tu enemigo, si tu ataque elemental es dominante sobre el del enemigo derrotaras a tu enemigo,\n"
-                             "de lo contrario perderas una vida.\n\n";
+                             "de lo contrario perderas una vida.\"\n\n";
                     writeDialogs(dialog);
                     system("pause");
                     system("cls");
@@ -544,16 +556,16 @@ class Fase1: public Laberinto{
                     dialog = "El circulo de dominios sobre cada ataque es: \n"
                              "\t\t\t\t\tLos ataques de Agua -> Vencen a los ataques de Fuego\n"
                              "\t\t\t\t\tLos ataques de Fuego -> Vencen a los ataques de Hielo\n"
-                             "\t\t\t\t\tLos ataques de Hielo -> Vencen a los ataques de Agua";
+                             "\t\t\t\t\tLos ataques de Hielo -> Vencen a los ataques de Agua\n\n";
                     writeDialogs(dialog);
                     system("pause");
                     system("cls");
 
-                    writeDialogs("......");
+                    writeDialogs("......\n");
                     system("pause");
                     system("cls");
 
-                    dialog = "Una figura amorfa se levanta frente a ti parece un esqueleto humano el cual esta cubierto de una sustancia oscura y espesa, el ser genera sonidos guturales.\n";
+                    dialog = "Una figura amorfa se levanta frente a ti, parece un esqueleto humano el cual esta cubierto de una sustancia oscura y espesa, el ser genera sonidos guturales.\n";
                     writeDialogs(dialog);
                     system("pause");
                     system("cls");
@@ -574,7 +586,244 @@ class Fase1: public Laberinto{
                     system("pause");
                     system("cls");
 
+                    elementalFight();
+
+                    dialog = "Despues de la batalla, tu enemigo queda reducido a polvo en el suelo, entre sus cenizas deja una llave de color plateado con un diamante grabado en el agarre la cual tomas,\n"
+                             "en la pared del cuarto hay algo escrito por lo que te acercas con la linterna en la mano para leer lo que hay en el muro.\n"
+                             "\"Que tu camino no termine en la desesperanza o de la contrario tu alma se transformara en un ente vacio, te volveras un Transfugo\"...\n\n";
+                    writeDialogs(dialog);
+                    system("pause");
+                    system("cls");
+
+                    player->inventario.addObjMision("Llave de plata", "Llave recogida de tu primer batalla con un Transfugo");
+                    dialog = "Llave de plata aniadida a tu inventario.\n";
+                    writeDialogs(dialog);
+                    system("pause");
+                    system("cls");
+
+                    dialog =  player->getName() + ": Transfugo, esa cosa era un Transfugo...\n"
+                             "Si no salgo de aqui, pronto terminare como una de esas cosas, mas vale que me de prisa.\n";
+                    writeDialogs(dialog);
+                    system("pause");
+                    system("cls");
+
+                    maze[x][y].setfirstTime(false);
                 }
+
+            }else if(x == 1 && y == 2){
+
+                if(maze[x][y].getfirstTime()){
+
+                    string dialog = "Entras a un cuarto que tiene un tragaluz en el techo, en el centro hay un cofre plateado con un diamante grabado en la parte superior,\n"
+                                    "te acercas al cofre y te das cuenta que tiene unas palabras escritas las cuales dicen....\n";
+                    writeDialogs(dialog);
+                    system("pause");
+                    system("cls");
+
+                    dialog = "\"Las recompenzas exigen sacrificios\"\n";
+                    writeDialogs(dialog);
+                    system("pause");
+                    system("cls");
+
+                    dialog = "Decides probar la llave recien adquirida en el cofre...\n";
+                    writeDialogs(dialog);
+                    system("pause");
+                    system("cls");
+
+                    int prob = 0 + (rand() % (99+1));
+
+                    if(prob <= 14){
+                        dialog = "Un escudo de un metal extranio se encuentra dentro...\nVibra con una energia reconfortante.\n";
+                        writeDialogs(dialog);
+                        system("pause");
+                        system("cls");
+
+                        dialog = "Tu capacidad de cargas de escudo a aumentado en uno.\n";
+                        writeDialogs(dialog);
+                        system("pause");
+                        system("cls");
+                        player->inventario.delObjMision("Llave de plata");
+                        player->setMaxShield(4);
+                    }
+                    else{
+                        dialog = "Una lluvia de flechas sale disparada hacia ti.\nPierdes una vida.\n";
+                        writeDialogs(dialog);
+                        system("pause");
+                        system("cls");
+                        player->inventario.delObjMision("Llave de plata");
+                        player->takeDamage();
+                    }
+
+                    maze[x][y].setfirstTime(false);
+                }
+            }else if(x == 0 && y == 2){
+
+                if(maze[x][y].getfirstTime()){
+
+                    string dialog = "Entras por un hueco a una nueva habitacion, pero esta es algo peculiar, esta llena de enormes bloques de obsidiana creciendo desde el suelo\n"
+                                    "los cuales brillan gracias a un tragaluz que deja entrar los rayos del sol.\n";
+                    writeDialogs(dialog);
+                    system("pause");
+                    system("cls");
+
+                    dialog = "Al fondo del cuarto escuchas gritos de algunos Transfugos y quejidos de una persona, guias la vista hasta el origen del alboroto y puedes visualizar el ruidoso evento.\n"
+                             "Un hombre de piel morena alto y fornido esta peleando con un hacha de cristal oscuro contra tres Transfugos que lo tienen rodeado.\n";
+                    writeDialogs(dialog);
+                    system("pause");
+                    system("cls");
+
+                    dialog = "Te acercas con rapidez hasta que el hombre logra verte.\n";
+                    writeDialogs(dialog);
+                    system("pause");
+                    system("cls");
+
+                    int option = 0;
+                    bool passTree = false;
+
+                    dialog = "DESCONOCIDO: TU VIAJERO, VEN Y AYUDAME TE LO SUPLICO!\n\n";
+                    writeDialogs(dialog);
+                    cout << "1)Yo? Pero si tu estas en mejor forma para derrotar a esos Transfugos!" << endl;
+                    cout << "2)No lo se..., Como me beneficiaria ayudarte?" << endl;
+                    cout << "3)Claro, pero... quien eres?" << endl << endl;
+                    cout << "Respondes: ";
+                    cin >> option;
+
+                    while(!passTree){
+                        switch (option) {
+                            case 1: dialog = "DESCONOCIDO: NO SEAS COBARDE Y AYUDAME!\n"; passTree = true; break;
+                            case 2: dialog = "DESCONOCIDO: Tan avaro eres? Enserio? Ahora que estoy en peligro de muerte?!\n"; passTree = true; break;
+                            case 3: dialog = "DESCONOCIDO: Vaya..., creo que no es el mejor momento para presentarme pero...\n"; passTree = true; break;
+                            default:  option = 1 + (rand() % (3+1)-1);
+                        }
+                    }
+
+                    passTree = false;
+                    system("cls");
+                    writeDialogs(dialog);
+                    system("pause");
+                    system("cls");
+
+                    dialog = "VILTRO: Soy VILTRO, el leniador de obsidiana.\nSi me ayudas prometo que te regresare el favor!";
+                    writeDialogs(dialog);
+                    system("pause");
+                    system("cls");
+
+                    dialog = "Te apiadas del leniador y le ofreces tu ayuda.\n";
+                    writeDialogs(dialog);
+                    system("pause");
+                    system("cls");
+
+                    elementalFight();
+
+                    dialog = "Un segundo transfugo se abalanza sobre tu ti...\n";
+                    writeDialogs(dialog);
+                    system("pause");
+                    system("cls");
+
+                    elementalFight();
+
+                    dialog = "Terminas con el segundo transfugo y vez como el leniador destruye el craneo de la ultima bestia, volviendose polvo al instante.\n";
+                    writeDialogs(dialog);
+                    system("pause");
+                    system("cls");
+
+
+                    dialog =  "El hombre se voltea y lo obserbas con mas detenimiento...\n"
+                              "En su cara hay una cicatriz que atravieza su ceja, tambien le falta un pedazo de oreja izquierda.\n"
+                              "Tiene una poblada barba negra que casi borra por completo su boca.\n";
+                    writeDialogs(dialog);
+                    system("pause");
+                    system("cls");
+
+                    dialog = "VILTRO: Tu batalla fue impresionante!\nAhora permiteme introducirme por completo..., como te dije soy VILTRO el leniador de este bosque de obsidiana.\n\n";
+                    writeDialogs(dialog);
+                    cout << "1)Creo que para ser un leniador necesitas arboles y aqui no veo ninguno..." << endl;
+                    cout << "2)Es una labor algo infructifera en este lugar no crees?" << endl;
+                    cout << "3)Vaya, y... En que bosque?" << endl << endl;
+                    cout << "Respondes: ";
+                    cin >> option;
+
+                    while(!passTree){
+                        switch (option) {
+                            case 1: dialog = "VILTRO: En realidad no son los mismos tipos de arboles que tu conoces...\n"; passTree = true; break;
+                            case 2: dialog = "VILTRO: No soy ese tipo de leniador...\n"; passTree = true; break;
+                            case 3: dialog = "VILTRO: En este, aunque tu no lo creas.\n"; passTree = true; break;
+                            default:  option = 1 + (rand() % (3+1)-1);
+                        }
+                    }
+
+                    passTree = false;
+                    system("cls");
+                    writeDialogs(dialog);
+                    system("pause");
+                    system("cls");
+
+                    dialog = "VILTRO: Este lugar es el bosque de los arboles de obsidiana, veras yo con mis companieros durante el apogeo de este lugar nos dedicabamos a proveer\n"
+                             "de obsidiana a todo Doorbell, es un mineral que era muy utilizado en edificios y construcciones, pero cuando los viajeros dejaron de llegar aqui,\n"
+                             "el rey pidio evacuar el laberinto, pero yo... no pude... me rehuse a abandonar mi hogar.\n\n";
+                    writeDialogs(dialog);
+                    system("pause");
+                    system("cls");
+
+                    dialog = "VILTRO se inclina para sentarse sobre una piedra y deja ver un tatuaje de un lobo negro en la parte trasera de su cuello.\n\n";
+                    writeDialogs(dialog);
+                    cout << "1)Esta genial tu tatuaje en el cuello!" << endl;
+                    cout << "2)Un tatuaje? Fuiste un motociclista o algo asi?" << endl;
+                    cout << "3)Que es eso en tu cuello?" << endl << endl;
+                    cout << "Respondes: ";
+                    cin >> option;
+
+                    while(!passTree){
+                        switch (option) {
+                            case 1: dialog = "VILTRO: Que? Mi marca? Vaya hace mucho que no recordaba que la tenia, la soledad no hace mucho por ti...\n"; passTree = true; break;
+                            case 2: dialog = "VILTRO: Moto..queee? Que es eso? Algun hechicero famoso?\n"; passTree = true; break;
+                            case 3: dialog = "VILTRO: Oh vaya hace mucho que no recordaba que la tenia...\n"; passTree = true; break;
+                            default:  option = 1 + (rand() % (3+1)-1);
+                        }
+                    }
+
+                    passTree = false;
+                    system("cls");
+                    writeDialogs(dialog);
+                    system("pause");
+                    system("cls");
+
+                    dialog = "VILTRO: Veras yo solia pertenecer a los caballeros de Obsidiana, durante muchos anios participe en guerras por el control de Doorbell pero cuando llego el\n"
+                             "REY CARMESI, nos mostro que estabamos en un circulo vicioso de violencia, por lo que bajamos nuestras armas y nos dedicamos a otras cosas...\n";
+                    writeDialogs(dialog);
+                    system("pause");
+                    system("cls");
+
+                    dialog = "VILTRO: Muchos se quitaron su marca de guerrero que nos identificaba, pero yo me la deje para recordar que la guerra solo hace danio a todos...\n"
+                             "Es ironico que haya olvidado que la tenia. No crees? jajaja...\n";
+                    writeDialogs(dialog);
+                    system("pause");
+                    system("cls");
+
+                    dialog = "VILTRO: Veo que quieres salir de este lugar, en una habitacion por donde viniste selle un camino con troncos de obsidiana.\n"
+                             "No te preocupes ahora mismo los quitare para que puedas continuar con tu viaje.\n";
+                    writeDialogs(dialog);
+                    system("pause");
+                    system("cls");
+
+                    dialog = "VILTRO se retira por unos minutos y despues de esperarlo regresa con algunos troncos de cristal de obsidiana en sus brazos.\n";
+                    writeDialogs(dialog);
+                    system("pause");
+                    system("cls");
+
+                    dialog = "VILTRO: Listo! Te deseo un buen viaje, esperemos que en algun momento nuestros caminos se topen de nuevo...\n";
+                    writeDialogs(dialog);
+                    system("pause");
+                    system("cls");
+
+                    maze[1][0].setWays(false, true, true, true);
+                    maze[x][y].setfirstTime(false);
+
+                    tutorial = finall;
+                }
+
+            }else if(x == 2 && y == 0){
+
             }
         }
 
@@ -584,7 +833,7 @@ class Fase1: public Laberinto{
             while ( dialog[i] != '\0')
             {
                 cout << dialog[i];
-                Sleep(25);
+                Sleep(0);
                 i++;
             };
         }
@@ -593,38 +842,120 @@ class Fase1: public Laberinto{
             system("cls");
 
             Elementals transfugoAttack = static_cast<Elementals>(0 + (rand() % (2 + 1)));
+            Elementals playerAttack;
+            bool fightEnd = false;
             int temp;
 
-            cout << "1)Agua" << endl;
-            cout << "2)Fuego" << endl;
-            cout << "3)Hielo" << endl << endl;
-            cout << "Elige con que vas a atacar...:";
-            cin >> temp;
 
-            system("cls");
+            do{
 
-            if(temp > 3 || temp < 1){
-                cout << "...Si no te lo tomas seriamente, entonces el destino eligira por ti.";
-                system("pause");
+                cout << "1)Agua" << endl;
+                cout << "2)Fuego" << endl;
+                cout << "3)Hielo" << endl << endl;
+                cout << "Elige con que vas a atacar...: ";
+                cin >> temp;
+
                 system("cls");
-                temp = 0 + (rand() % (2+1));
-            } else temp--;
 
-            Elementals playerAttack = static_cast<Elementals>(temp);
+                if(temp > 3 || temp < 1){
+                    cout << endl << "...Si no te lo tomas seriamente, entonces el destino eligira por ti." << endl;
+                    system("pause");
+                    system("cls");
+                    temp = 0 + (rand() % (2+1));
+                } else temp--;
 
-            switch(playerAttack){
-                case water:
-                    if(transfugoAttack == ice){
-                        cout << "Elegiste agua..." << endl;
-                        cout << "El transfugo lanza hielo..." << endl << endl;
-                        cout << "Haz perdido! Pierdes una vida...";
-                    }
-                    else if(transfugoAttack == fire){
+                playerAttack = static_cast<Elementals>(temp);
 
-                    }
-                    break;
-            }
+                switch(playerAttack){
+                    case water:
+                        if(transfugoAttack == ice){
+                            fightEnd = true;
+                            cout << "Elegiste agua..." << endl;
+                            cout << "El transfugo lanza hielo..." << endl << endl;
+                            cout << "Haz perdido! Pierdes una vida... " << endl;
+                            player->takeDamage();
+                            system("pause");
+                            system("cls");
+                        }
+                        else if(transfugoAttack == fire){
+                            fightEnd = true;
+                            cout << "Elegiste agua..." << endl;
+                            cout << "El transfugo lanza fuego..." << endl << endl;
+                            cout << "Haz ganado!" << endl;
+                            system("pause");
+                            system("cls");
+                        }
+                        else if(transfugoAttack == water){
+                            cout << "Elegiste agua..." << endl;
+                            cout << "El transfugo lanza agua..." << endl << endl;
+                            cout << "Empate!" << endl;
+                            cout << "Vuelve a elegir tu ataque..." << endl;
+                            transfugoAttack = static_cast<Elementals>(0 + (rand() % (2 + 1)));
+                            system("pause");
+                            system("cls");
+                        }
+                        break;
 
+                    case fire:
+                        if(transfugoAttack == water){
+                            fightEnd = true;
+                            cout << "Elegiste fuego..." << endl;
+                            cout << "El transfugo lanza agua..." << endl << endl;
+                            cout << "Haz perdido! Pierdes una vida..." << endl;
+                            player->takeDamage();
+                            system("pause");
+                            system("cls");
+                        }
+                        else if(transfugoAttack == ice){
+                            fightEnd = true;
+                            cout << "Elegiste fuego..." << endl;
+                            cout << "El transfugo lanza hielo..." << endl << endl;
+                            cout << "Haz ganado!" << endl;
+                            system("pause");
+                            system("cls");
+                        }
+                        else if(transfugoAttack == fire){
+                            cout << "Elegiste fuego..." << endl;
+                            cout << "El transfugo lanza fuego..." << endl << endl;
+                            cout << "Empate!" << endl;
+                            cout << "Vuelve a elegir tu ataque..." << endl;
+                            transfugoAttack = static_cast<Elementals>(0 + (rand() % (2 + 1)));
+                            system("pause");
+                            system("cls");
+                        }
+                        break;
+
+                    case ice:
+                        if(transfugoAttack == fire){
+                            fightEnd = true;
+                            cout << "Elegiste hielo..." << endl;
+                            cout << "El transfugo lanza fuego..." << endl << endl;
+                            cout << "Haz perdido! Pierdes una vida..." << endl;
+                            player->takeDamage();
+                            system("pause");
+                            system("cls");
+                        }
+                        else if(transfugoAttack == water){
+                            fightEnd = true;
+                            cout << "Elegiste hielo..." << endl;
+                            cout << "El transfugo lanza agua..." << endl << endl;
+                            cout << "Haz ganado!" << endl;
+                            system("pause");
+                            system("cls");
+                        }
+                        else if(transfugoAttack == ice){
+                            cout << "Elegiste hielo..." << endl;
+                            cout << "El transfugo lanza hielo..." << endl << endl;
+                            cout << "Empate!" << endl;
+                            cout << "Vuelve a elegir tu ataque..." << endl;
+                            transfugoAttack = static_cast<Elementals>(0 + (rand() % (2 + 1)));
+                            system("pause");
+                            system("cls");
+                        }
+                        break;
+                }
+
+            }while(!fightEnd);
 
         }
 };
