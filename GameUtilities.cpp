@@ -58,8 +58,8 @@ string Player::getName() {
     return name;
 }
 
-void Player::setMaxShield(int maxshield) {
-    maxShield = maxshield;
+void Player::increaseMaxShield() {
+    maxShield++;
 }
 
 Inventory::Inventory() {

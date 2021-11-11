@@ -37,11 +37,11 @@ class Fase1: public Laberinto{
 
             string playerName;
 
-            cout << "Alpha" << endl;
+            cout << "Alpha Version" << endl;
             system("pause");
             system("cls");
 
-            cout << endl << "Lo que vas a jugar es el tutorial y la version muy temprana del juego. Por lo que errores y crasheos pueden ocurrir." << endl;
+            cout << endl << "Lo que vas a jugar llega hasta la midad de la fase 2. Errores y crasheos pueden ocurrir." << endl;
             cout << "Teniendo en mente eso empecemos..." << endl;
             system("pause");
             system("cls");
@@ -72,9 +72,20 @@ class Fase1: public Laberinto{
             maze[1][0].setWays(false, false, true, false);
             maze[1][1].setWays(true, true, false, false);
             maze[1][2].setWays(true, false, true, false);
+            // SEGUNDA FASE
             maze[2][0].setWays(false, true, false, false);
             maze[2][1].setWays(true, true, false, false);
             maze[2][2].setWays(true, true, false, false);
+            maze[2][3].setWays(true, false, true, false); // GOTA
+            maze[0][3].setWays(false, false, false, true); // DRAGON
+            maze[1][3].setWays(false, true, true, true); // COSTURERA
+            maze[3][3].setWays(false, false, true, true); // LAVA
+            maze[4][3].setWays(false, true, true, false); // LAGO
+            maze[0][4].setWays(false, false, false, true); // COFRE +VIDA
+            maze[1][4].setWays(true, false, true, true); // LLAVE +VIDA
+            maze[2][4].setWays(false, false, true, false); // MERCADER
+            maze[3][4].setWays(false, false, false, true); // LORE ROOM
+            maze[4][4].setWays(true, false, true, false); // DEF ROOM
 
             string dialog = "\"El mundo es solo para aquellos que realmente lo valoran, Seras digno de el?\"\n"
                             "El frio penetrante del ambiente retuerce tus huesos, abres los ojos y de una profunda oscuridad poco a poco logras vislumbrar el ambiente que tienes frente a ti.\n";
@@ -369,7 +380,7 @@ class Fase1: public Laberinto{
                     system("pause");
                     system("cls");
 
-                    dialog = "WINKLIPET: El REY CARMESI es el soberano del reino de Doorbell, hace mucho tiempo los enanos,\ngnomos, las costureras y los caballeros de obsidiana viviamos en constantes guerras y disputas,\n"
+                    dialog = "WINKLIPET: El REY CARMESI es el soberano del reino de Doorbell, hace mucho tiempo los enanos,\ngnomos, artesanos y los caballeros de obsidiana viviamos en constantes guerras y disputas,\n"
                              "pero un dia el REY CARMESI llego y unio a nuestros pueblos bajo el amor y la paz...,\nel es el que construyo este laberinto el cual tenia el proposito de purgar el alma de los impuros,\n"
                              "pero un dia los viajeros dejaron de llegar e este laberinto por lo que el rey perdio el interes,\npero todos los que vivimos aqui nos rehusamos a irnos ya que este es nuestro hogar.\n\n";
                     writeDialogs(dialog);
@@ -493,7 +504,7 @@ class Fase1: public Laberinto{
                     system("cls");
 
                     dialog = "Te acercas al arbol y tomas una de sus manzanas en la cual puedes ver tu reflejo gracias a su brillante superficie...\nAgregado objeto de mision Manzana al inventario.\n";
-                    player->inventario.addObjMision("Manzana", "Manzana que te pidio el WINKLIPET.");
+                    player->inventario.addObjMision("Manzana", "Manzana que te pidio WINKLIPET.");
                     writeDialogs(dialog);
                     system("pause");
                     system("cls");
@@ -643,7 +654,7 @@ class Fase1: public Laberinto{
                         system("pause");
                         system("cls");
                         player->inventario.delObjMision("Llave de plata");
-                        player->setMaxShield(4);
+                        player->increaseMaxShield();
                     }
                     else{
                         dialog = "Una lluvia de flechas sale disparada hacia ti.\nPierdes una vida.\n";
@@ -824,6 +835,629 @@ class Fase1: public Laberinto{
 
             }else if(x == 2 && y == 0){
 
+                if(maze[x][y].getfirstTime() && quest[0] == intro){ // CAIDA DEL PUENTE
+
+                    string dialog = "Despues de salir por la puerta antes bloqueada por troncos de obsidiana, encuentras un puente alumbrado por dos cristales azules,\n"
+                                    "lo cruzas con lentitud para evitar que el movimiento te haga caer.\n";
+                    writeDialogs(dialog);
+                    system("pause");
+                    system("cls");
+
+                    dialog  = "De pronto escuchas sonidos de algo hueco estampandose contra las paredes del acantilado por el que pasa el puente...\n";
+                    writeDialogs(dialog);
+                    system("pause");
+                    system("cls");
+
+                    dialog = "Con la linterna alumbras hacia abajo y te horrorizas al ver lo que se aproxima hacia ti..\n"
+                             "Un grupo de Transfugos estan escalando el acantilado con el fin de alcanzarte.\n";
+                    writeDialogs(dialog);
+                    system("pause");
+                    system("cls");
+
+
+                    dialog = "Con algo de miedo analizas la situacion que te rodea...\n"
+                             "Del en el fondo del acantilado hay un rio que tiene a todos los Transfugos mojados.\n";
+                    writeDialogs(dialog);
+                    system("pause");
+                    system("cls");
+
+                    dialog = "Sin tambalear abres tu mochila y sacas el frasco con piedras moradas, tomas un puniado de ellas y las lanzas hacia el rio."
+                             "\nLas piedras de hielo caen sobre el agua haciendo algo de burbujas y congelando todo el rio a su paso, cada uno de los Transfugos\n"
+                             "quedan congelados al instante al estar mojados por el agua del rio.\n\n";
+                    writeDialogs(dialog);
+                    system("pause");
+                    system("cls");
+
+                    dialog = "Un ultimo transfugo lanza una llamarada que quema las lianas del extremo del puente, con la rapidez de un rayo corres hacia el otro extremo del puente,\n"
+                             "y cuando este se derrumba saltas hacia el acantilado, alcanzando a sostenerte por un brazo...\n";
+                    writeDialogs(dialog);
+                    system("pause");
+                    system("cls");
+
+                    dialog = player->getName() + ": Uff eso estubo muy cerca...\n";
+                    writeDialogs(dialog);
+                    system("pause");
+                    system("cls");
+
+                    dialog = "Logras subir todo tu cuerpo en tierra firme y te volteas a ver como ya no hay puente de regreso.\n" +
+                             player->getName() + ": Parece que ya no hay vuelta atras...";
+                    writeDialogs(dialog);
+                    system("pause");
+                    system("cls");
+
+                    dialog = "Volteas y para tu sorpresa un ultimo Transfugo se abalanza hacia ti, con un salto lo ezquivas y sacas de tu bolsa tus frascos elementales.\n";
+                    writeDialogs(dialog);
+                    system("pause");
+                    system("cls");
+
+                    elementalFight();
+
+                    dialog = "Despues de tan agitada serie de eventos te sientas a pensar tu siguiente paso...\n";
+                    writeDialogs(dialog);
+                    system("pause");
+                    system("cls");
+
+                    maze[x][y].setfirstTime(false);
+                    maze[2][0].setWays(false, true, false, false);
+                }
+                else if(!maze[x][y].getfirstTime() && quest[0] == intro){
+                    string dialog = "Estas en el cuarto con el puente cortado.\n";
+                    writeDialogs(dialog);
+                    system("pause");
+                    system("cls");
+                }
+            }
+            else if(x == 2 && y == 1){ // RELAX
+
+                if(maze[x][y].getfirstTime()){
+
+                    string dialog = "Despues de lo del puente entras con desconfianza hacia la segunda habitacion esperando enfrentarte con algun enemigo.\n";
+                    writeDialogs(dialog);
+                    system("pause");
+                    system("cls");
+
+                    dialog = "Pero despues de mucho tiempo encontraste una habitacion en calma...\n"
+                             "Despues de tan agitada serie de eventos te sientas a pensar tu siguiente paso.\n";
+
+                    writeDialogs(dialog);
+                    system("pause");
+                    system("cls");
+
+                    maze[x][y].setfirstTime(false);
+                }
+            }
+            else if(x == 2 && y == 2){ //ESFINGE
+
+                if(maze[x][y].getfirstTime() && quest[0] == intro){
+
+                    string dialog = "Entras a la habitacion y te encuentras un cuarto con una pintura en su pared y una enorme escultura de una ESFINJE.\n";
+                    writeDialogs(dialog);
+                    system("pause");
+                    system("cls");
+
+                    dialog = player->getName() + ": Que extrania criatura...\n";
+                    writeDialogs(dialog);
+                    system("pause");
+                    system("cls");
+
+                    dialog = "Te acercas a ver la pintura y en la misma se ve un Buho con una corona Roja en la cabeza, de sus ojos escurren lagrimas de sangre que se ve que alguien aniadio hace no mucho.\n";
+                    writeDialogs(dialog);
+                    system("pause");
+                    system("cls");
+
+                    dialog = "En el pie de la pintura hay una leyenda que dice \"El REY CARMESI, el unificador de todos los pueblos\"...\n";
+                    writeDialogs(dialog);
+                    system("pause");
+                    system("cls");
+
+
+                    maze[x][y].setfirstTime(false);
+                }
+                else if(!maze[x][y].getfirstTime() && quest[0] == mid && !player->inventario.searchObjMision("Sangre de Esfinje")){ // HACIENDO MISION COSTURERA (PENDIENTE)
+
+                    string dialog = "Entras a la habitacion y encuentras la estatua de la esfinje frente a ti.\n";
+                    writeDialogs(dialog);
+                    system("pause");
+                    system("cls");
+
+                    dialog = player->getName() + ": Donde diablos voy a encontrar a una esfinje?...\n";
+                    writeDialogs(dialog);
+                    system("pause");
+                    system("cls");
+
+                    dialog = "Te sientas bajo la estatua y exhalas mientras dices...\n";
+                    writeDialogs(dialog);
+                    system("pause");
+                    system("cls");
+
+                    dialog = player->getName() + ": Desearia que realmente estuvieras aqui...\n";
+                    writeDialogs(dialog);
+                    system("pause");
+                    system("cls");
+
+                    dialog = "Una voz tenebrosa y suave como un susurro se escucha en el aire...\n";
+                    writeDialogs(dialog);
+                    system("pause");
+                    system("cls");
+
+                    dialog = "VOZ DESCONOCIDA: Ten cuidado con lo que deseasss.\n";
+                    writeDialogs(dialog);
+                    system("pause");
+                    system("cls");
+
+                    dialog = "La estatua detras de ti comienza a temblar y sus ojos brillan de manera aterradora.\n";
+                    writeDialogs(dialog);
+                    system("pause");
+                    system("cls");
+
+                    dialog = "ESFINJE: YO SOY LA ESFINJE DE LOS DESEOS!\n"
+                             "Puedo otorgarte lo que desees, siempre y cuando aciertes el acertijo que ante ti presente!\n\n";
+                    writeDialogs(dialog);
+
+                    int option = 0;
+                    bool passTree = false;
+
+                    cout << "1)AHHHHH! NO ME COMAS!" << endl;
+                    cout << "2)Tu eres la esfinje?!..." << endl;
+                    cout << "3)Vaya... eres muy alta..." << endl << endl;
+                    cout << "Respondes: ";
+                    cin >> option;
+
+                    while(!passTree){
+                        switch (option) {
+                            case 1: dialog = "ESFINJE: No lo hare siempre y cuando sigas las reglas.\n"; passTree = true; break;
+                            case 2: dialog = "ESFINJE: Acertaste mi invocador.\n"; passTree = true; break;
+                            case 3: dialog = "ESFINJE: Mi tamanio es el que tu me diste.\n"; passTree = true; break;
+                            default:  option = 1 + (rand() % (3+1)-1);
+                        }
+                    }
+
+                    passTree = false;
+                    system("cls");
+                    writeDialogs(dialog);
+                    system("pause");
+                    system("cls");
+
+                    dialog = "ESFINJE: Como ya lo mencione yo soy la ESFINJE y tu me invocaste con el proposito de que te cumpla un deseo accesible a mi.\n"
+                             "Deseas un poco de mi sangre no es cierto? Pues adivina mi acertijo y yo te otorgare un poco de ella.\n";
+                    writeDialogs(dialog);
+                    system("pause");
+                    system("cls");
+
+                    dialog = "ESFINJE: Si fallas o te contestas algo que no, te hare danio...\n";
+                    writeDialogs(dialog);
+                    system("pause");
+                    system("cls");
+
+                    int randomQuiz = 0 + (rand() % (2+1));
+                    int answer = 0;
+                    bool right = false;
+
+                    dialog = "ESFINJE: PREPARATE...\n";
+                    writeDialogs(dialog);
+                    system("pause");
+                    system("cls");
+
+                    do{
+                        switch (randomQuiz){
+
+                            case 0:
+                                dialog = "Si te lo hiciera, te desgarraria con mis zarpas, pero eso solo ocurrira si no lo captas. Y no es facil la respuesta de esta adivinanza,\n"
+                                         "porque esta lejana, en tierras de bonanza, donde empieza la region de las montanias de arena y acaba la de los toros, la sangre, el mar y la verbena.\n"
+                                         "Y ahora contesta, tu, que has venido a jugar: ¿a que animal no te gustaraa besar?\n\n";
+                                writeDialogs(dialog);
+
+                                cout << "1)La arania" << endl;
+                                cout << "2)El escorpion" << endl;
+                                cout << "3)La serpiente" << endl;
+                                cout << "4)La rana" << endl << endl;
+                                cout << "Respondes: ";
+                                cin >> answer;
+
+                                if(answer == 1){
+                                    system("cls");
+                                    cout << "ESFINJE: LA ARANIA! CORRECTO!" << endl;
+                                    system("pause");
+                                    system("cls");
+                                    right = true;
+                                }
+                                else{
+                                    system("cls");
+                                    cout << "ESFINJE: INCORRECTO!" << endl;
+                                    cout << "Pierdes una vida." << endl;
+                                    system("pause");
+                                    system("cls");
+                                    player->takeDamage();
+                                    cout << "ESFINJE: Repetire el acertijo..." << endl;
+                                    system("pause");
+                                    system("cls");
+                                }
+                                break;
+
+                            case 1:
+                                dialog = "Si me tienes, quieres compartirme. Si me compartes, no me tienes. Que soy?\n\n";
+                                writeDialogs(dialog);
+
+                                cout << "1)Deseo" << endl;
+                                cout << "2)Puridad" << endl;
+                                cout << "3)Pasion" << endl;
+                                cout << "4)Desesperacion" << endl << endl;
+                                cout << "Respondes: ";
+                                cin >> answer;
+
+                                if(answer == 2){
+                                    system("cls");
+                                    cout << "ESFINJE: PURIDAD! CORRECTO!" << endl;
+                                    system("pause");
+                                    system("cls");
+                                    right = true;
+                                }
+                                else{
+                                    system("cls");
+                                    cout << "ESFINJE: INCORRECTO!" << endl;
+                                    cout << "Pierdes una vida." << endl;
+                                    system("pause");
+                                    system("cls");
+                                    player->takeDamage();
+                                    cout << "ESFINJE: Repetire el acertijo..." << endl;
+                                    system("pause");
+                                    system("cls");
+                                }
+                                break;
+
+                            case 2:
+                                dialog = "Ponme de lado y soy todo. Cortame por la mitad y no soy nada. Que soy?\n\n";
+                                writeDialogs(dialog);
+
+                                cout << "1)El 0" << endl;
+                                cout << "2)La letra B" << endl;
+                                cout << "3)El 8" << endl;
+                                cout << "4)El 9" << endl << endl;
+                                cout << "Respondes: ";
+                                cin >> answer;
+
+                                if(answer == 3){
+                                    system("cls");
+                                    cout << "ESFINJE: EL 8! CORRECTO!" << endl;
+                                    system("pause");
+                                    system("cls");
+                                    right = true;
+                                }
+                                else{
+                                    system("cls");
+                                    cout << "ESFINJE: INCORRECTO!" << endl;
+                                    cout << "Pierdes una vida." << endl;
+                                    system("pause");
+                                    system("cls");
+                                    player->takeDamage();
+                                    cout << "ESFINJE: Repetire el acertijo..." << endl;
+                                    system("pause");
+                                    system("cls");
+                                }
+                                break;
+                        }
+                    }while(!right);
+
+                    dialog = "Despues de acertar su acertijo la esfije levanta su mano y con su garra se corta la otra pata,\n"
+                             "de su extremidad chorrea un liquido plateado que cae en un frasco y te la acerca con su cola.\n";
+                    writeDialogs(dialog);
+                    system("pause");
+                    system("cls");
+
+                    dialog = "ESFINJE: Usala con sabiduria.\nObjeto de mision Sangre de Esfinje aniadido al inventario\n";
+                    writeDialogs(dialog);
+                    system("pause");
+                    system("cls");
+                    player->inventario.addObjMision("Sangre de Esfinje", "CIEDA menciono que la usara para cubrir una embarcacion");
+
+                    if(player->inventario.searchObjMision("Embarcacion")){
+                        quest[0] = mid2;
+                    }
+                }
+            }
+            else if(x == 2 && y == 3){ // GOTA
+
+                if(maze[x][y].getfirstTime() && quest[0] == intro){
+
+                    string dialog = "Dentro de la habitacion hay un candelabro azul que alumbra al cuarto y en la esquina te encuentras un Transfugo que al verte corre con desesperacion a ti...\n";
+                    writeDialogs(dialog);
+                    system("pause");
+                    system("cls");
+
+                    elementalFight();
+
+                    dialog = "El Transfugo se hace polvo frente a tus ojos, entre sus cenizas encuentras un pequenio diamante en forma de gota que tomas y llevas contigo.\n"
+                             "Objeto de mision Diamante de Gota aniadido al inventario.\n";
+                    writeDialogs(dialog);
+                    system("pause");
+                    system("cls");
+                    player->inventario.addObjMision("Diamante de Gota", "Tendra algun valor?");
+
+                    dialog = "El cuarto de abajo esta inundado de lava, parece imposible pasar por ahi...\n";
+                    writeDialogs(dialog);
+                    system("pause");
+                    system("cls");
+                    maze[x][y].setfirstTime(false);
+                }
+                else if(!maze[x][y].getfirstTime() && quest[0] == mid){
+
+                    string dialog = "El cuarto de abajo esta inundado de lava, necesito la sangre y una embarcacion...\n";
+                    writeDialogs(dialog);
+                    system("pause");
+                    system("cls");
+                }
+
+            }
+            else if(x == 1 && y == 3){
+
+                if(maze[x][y].getfirstTime()){
+
+                    string dialog = "Entras a un cuarto lleno de artilugios de costura, miles de estambres se encuentran en el suelo, agujas de tejer hay centenares esparcidas por toda la habitacion de color marron.\n";
+                    writeDialogs(dialog);
+                    system("pause");
+                    system("cls");
+
+                    dialog = "En el fondo te encuentras a una mujer con un chaleco azul, una blusa roja y una falda larga de color blanco, esta sentada en un estambre de tamanio gigante llorando.\n";
+                    writeDialogs(dialog);
+                    system("pause");
+                    system("cls");
+
+                    dialog = "DESCONOCIDA: *sniff* \t*hummmm*\n"
+                             "Sollosa la mujer...\n";
+                    writeDialogs(dialog);
+                    system("pause");
+                    system("cls");
+
+                    dialog = "Te acercas con lentitud esperando lo peor, la mujer se da cuenta de tu precencia y con tristeza te dice...\n";
+                    writeDialogs(dialog);
+                    system("pause");
+                    system("cls");
+
+                    dialog = "DESCONOCIDA: Un viajero...\n\n"
+                             "Dice mientras se seca los mocos y se limpia los hinchados ojos de tanto llorar.\n\n";
+                    writeDialogs(dialog);
+
+                    int option = 0;
+                    bool passTree = false;
+
+                    cout << "1)Estas bien? Por que lloras?" << endl;
+                    cout << "2)Meh... Es esto una trampa para matarme o algo?" << endl;
+                    cout << "3)Ughhh, limpiate la cara antes de dirigirme la palabra..." << endl << endl;
+                    cout << "Respondes: ";
+                    cin >> option;
+
+                    while(!passTree){
+                        switch (option) {
+                            case 1: dialog = "DESCONOCIDA: Ohhhh, esta es mi triste situacion, mi maldicion *sniff*\nTe rezo REY CARNESI que me salves de esta situacion...\n"; passTree = true; break;
+                            case 2: dialog = "DESCONOCIDA: Yo no represento un peligro para ti viajero... *sniff*, de hecho no se nada sobre pelear...\n"; passTree = true; break;
+                            case 3: dialog = "DESCONOCIDA: Oh... *sniff* Me disculpo por que me veas en esta situacion....\n"; passTree = true; break;
+                            default:  option = 1 + (rand() % (3+1)-1);
+                        }
+                    }
+
+                    passTree = false;
+                    system("cls");
+                    writeDialogs(dialog);
+                    system("pause");
+                    system("cls");
+
+                    dialog = "CIEDA: Me llamo CIEDA la costurera, o bueno.... lo solia ser antes de que fuera despojada de mi estudio de costura, ahora soy solo CIEDA... *sniff*\n";
+                    writeDialogs(dialog);
+                    system("pause");
+                    system("cls");
+
+                    dialog = player->getName() + ": Despojada... de que?\n";
+                    writeDialogs(dialog);
+                    system("pause");
+                    system("cls");
+
+                    dialog = "CIEDA: Mi estudio de costura..., mi templo esta lleno de miles de hilos de la mas fina seda y telas de la mas suave textura, de hecho cuando el REY CARMESI nos pidio evacuar\n"
+                             "este laberinto, yo me negue con la excusa de que estaba enamorada de tan hermoso lugar y no podia irme...\n\n";
+                    writeDialogs(dialog);
+
+                    cout << "1)Pero... Como llegaste aqui?" << endl;
+                    cout << "2)Pues si se ve igual de destruido que este lugar... no creo que fuera tan bonito desde el principio." << endl;
+                    cout << "3)Y... Entonces que haces aqui?" << endl << endl;
+                    cout << "Respondes: ";
+                    cin >> option;
+
+                    while(!passTree){
+                        switch (option) {
+                            case 1: dialog = "CIEDA: Es una complicada historia... pero... creo te la puedo resumir.\n"; passTree = true; break;
+                            case 2: dialog = "CIEDA: NO SEAS GROCERO!... Perdon... Hablo enserio, mi santuario de costura si es hermoso.\n"; passTree = true; break;
+                            case 3: dialog = "CIEDA: Ese maldito ser me arrebato lo que tenia...\n"; passTree = true; break;
+                            default:  option = 1 + (rand() % (3+1)-1);
+                        }
+                    }
+
+                    passTree = false;
+                    system("cls");
+                    writeDialogs(dialog);
+                    system("pause");
+                    system("cls");
+
+                    dialog = "CIEDA: Veras, cuando casi todos se fueron del laberinto, cerca de aqui un huevo de dragon se colo al laberinto y de el eclociono un ser lleno de pura maldad...\n";
+                    writeDialogs(dialog);
+                    system("pause");
+                    system("cls");
+
+                    dialog = "CIEDA: No sabemos su nombre real..., o si tiene uno, pero todos lo conocemos con el nombre de \"Duo\", ese maldito ser se apropio de una habitacion que daba acceso al LAGO DE LAS LAGRIMAS,\n"
+                             "el cual tiene un agua magica que es la unica cosa que existe para derrotarlo.\n";
+                    writeDialogs(dialog);
+                    system("pause");
+                    system("cls");
+
+
+                    dialog = "CEIDA: Despues de anios de vivir, ahi crecio demasiado para caber en ese cuarto por lo que, sabiendo que mi santuario de costura es la habitacion mas grande del laberinto,\n"
+                             "me expulso a pura llamarada, y para evitar que alguien intentara llegar al cuarto del LAGO DE LAS LAGRIMAS, inundo de lava el cuarto que da acceso al lago y ahora\n"
+                             "no hay forma de correrlo de mi santuario...\n\n";
+                    writeDialogs(dialog);
+
+                    cout << "1)Te gusta mucho coser por lo que veo..." << endl;
+                    cout << "2)Pero... que mas da, solo busca otro cuarto en donde coser." << endl;
+                    cout << "3)Por que no buscas otra aficion?" << endl << endl;
+                    cout << "Respondes: ";
+                    cin >> option;
+
+                    while(!passTree){
+                        switch (option) {
+                            case 1: dialog = "CIEDA: Es todo lo que siempre he conocido...\n"; passTree = true; break;
+                            case 2: dialog = "CIEDA: Me gustaria pero... en ese cuarto deje mis herramientas.\n"; passTree = true; break;
+                            case 3: dialog = "CIEDA: No lo entiendes verdad? *sniff* No puedo solo \"Dejar de coser\".\n"; passTree = true; break;
+                            default:  option = 1 + (rand() % (3+1)-1);
+                        }
+                    }
+
+                    passTree = false;
+                    system("cls");
+                    writeDialogs(dialog);
+                    system("pause");
+                    system("cls");
+
+                    dialog = "CIEDA: Veraz, yo pertenezco a la raza de los artesanos, durante siglos trabajamos bajo el yugo de otra raza, pero con la llegada del REY CARMESI,\n"
+                             "nos libero y nos ofrecio crear, bordar, coser y diseniar lo que nosotras quisieramos sin obedecer a nada ni nadie...\n";
+                    writeDialogs(dialog);
+                    system("pause");
+                    system("cls");
+
+                    dialog = "CIEDA: Pero ahora no puedo hacer lo que siempre he amado por estar controlada por otro ser. Ironico...no lo crees? *sniff*\n";
+                    writeDialogs(dialog);
+                    system("pause");
+                    system("cls");
+
+                    dialog = player->getName() + ": No es posible derrotar a ese malvado ser de alguna otra forma?\n";
+                    writeDialogs(dialog);
+                    system("pause");
+                    system("cls");
+
+                    dialog = "CIEDA: No..., solo el agua de las mil lagrimas es capaz de derrotarlo, y su acceso esta lleno de lava.\n"
+                             "La unica cosa que es inmune a tales temperaturas es la sangre de Esfinje y encarar a esa bestia es... una locura.\n";
+                    writeDialogs(dialog);
+                    system("pause");
+                    system("cls");
+
+                    dialog = player->getName() + ": Dices que si logro obtener su sangre y me la tomo me volvere invensible a la lava?\n";
+                    writeDialogs(dialog);
+                    system("pause");
+                    system("cls");
+
+                    dialog = "CIEDA: Por todos los estambres! NO! La sangre de esfinje es sumamante toxica con todo lo vivo.\n"
+                             "La unica opcion que tienes seria pintar una embarcacion con la sangre y se volvera inmune a la lava,\n"
+                             "creo que por aqui cerca hay un mercader el cual es propietario de toda clase de articulos,\n"
+                             "tal vez tenga alguna embarcacion que puedas pintar con la sangre de esfinje...\n\n";
+                    writeDialogs(dialog);
+                    system("pause");
+                    system("cls");
+
+                    dialog = "CIEDA: Se que esta mision suena como un suicidio, pero si logras ayudarme te otorgare esto.\n";
+                    writeDialogs(dialog);
+                    system("pause");
+                    system("cls");
+
+                    dialog = "CIEDA saca de una de sus bolsas un frasco con un liquido de color verde brillante...\n";
+                    writeDialogs(dialog);
+                    system("pause");
+                    system("cls");
+
+                    dialog = "CIEDA: Esta es la ultima pocion diminutiva que me queda..., si la tomas seras capaz de pasar por la puerta que te conducira a tu libertad.\n\n";
+                    writeDialogs(dialog);
+
+                    cout << "1)Es un trato CIEDA..., hare lo posible por ayudarte." << endl;
+                    cout << "2)Sabes...solia ser programador, mi jefe era terrible..., pero yo no, asi que tendre misericordia, y te ayudare." << endl;
+                    cout << "3)Acepto tu reto." << endl << endl;
+                    cout << "Respondes: ";
+                    cin >> option;
+
+                    bool rightAnswer = false;
+
+                    while(!passTree){
+                        switch (option) {
+                            case 1: dialog = "CIEDA: Muchisimas gracias...\n"; passTree = true; break;
+                            case 2:  passTree = true; rightAnswer = true; break;
+                            case 3: dialog = "CIEDA: Ese es el espiritu viajero.\n"; passTree = true; break;
+                            default:  option = 1 + (rand() % (3+1)-1);
+                        }
+                    }
+
+                    passTree = false;
+                    system("cls");
+
+                    if(rightAnswer){
+
+                        dialog = "CIEDA: Progra..que?!...jajaja\nVeo que tu humor es oro jaja *sniff*..., nunca pierdas esa cualidad.\n";
+                        writeDialogs(dialog);
+                        system("pause");
+                        system("cls");
+
+                        writeDialogs("......\n");
+                        system("pause");
+                        system("cls");
+
+                        dialog = "CIEDA: Como te llamas?\n";
+                        writeDialogs(dialog);
+                        system("pause");
+                        system("cls");
+
+                        dialog = player->getName() + ": " + player->getName() + "...\n";
+                        writeDialogs(dialog);
+                        system("pause");
+                        system("cls");
+
+                        dialog = "CIEDA: " + player->getName() + "..., ten esto tambien, es un manto magico especial que confeccione alguna vez, estoy segura te ayudara en tu viaje...\n";
+                        writeDialogs(dialog);
+                        system("pause");
+                        system("cls");
+
+                        dialog = "Tu capacidad de cargas de escudo a aumentado en uno.\n";
+                        writeDialogs(dialog);
+                        system("pause");
+                        system("cls");
+                        player->increaseMaxShield();
+
+                    }else{
+                        writeDialogs(dialog);
+                        system("pause");
+                        system("cls");
+
+                    }
+
+                    dialog = "CIEDA: Te deseo suerte...\n"
+                             "Puede que esta herramiente te ayude, es de las pocas cosas que logre sacar de mi santuario antes de que el dragon me corriera,\n"
+                             "son unos remaches magicos los cuales se pueden usar para reparar casi cualquier cosa.\n\n";
+                    writeDialogs(dialog);
+                    system("pause");
+                    system("cls");
+                    player->inventario.addObjMision("Remaches Magicos", "CIEDA aseguro que pueden reparar cualquier cosa");
+
+                    dialog = "Objeto de mision Remaches Magicos aniadido al inventario.\n";
+                    writeDialogs(dialog);
+                    system("pause");
+                    system("cls");
+
+                    dialog = "CIEDA: Por cierto, el dragon esta en el cuarto de arriba...\n";
+                    writeDialogs(dialog);
+                    system("pause");
+                    system("cls");
+
+                    maze[x][y].setfirstTime(false);
+                    quest[0] = mid;
+                }
+                else if(!maze[x][y].getfirstTime() && quest[0] == mid){
+                    string dialog = "CIEDA: Veo que estas ocupado..., no te distraigo mas.\n";
+                    writeDialogs(dialog);
+                    system("pause");
+                    system("cls");
+                }
+
+            }
+            else{ // Cuarto default
+
+                string dialog = "Cuarto default\n";
+                writeDialogs(dialog);
+                system("pause");
+                system("cls");
+
+                elementalFight();
             }
         }
 
@@ -873,9 +1507,10 @@ class Fase1: public Laberinto{
                             cout << "Elegiste agua..." << endl;
                             cout << "El transfugo lanza hielo..." << endl << endl;
                             cout << "Haz perdido! Pierdes una vida... " << endl;
-                            player->takeDamage();
                             system("pause");
                             system("cls");
+                            player->takeDamage();
+
                         }
                         else if(transfugoAttack == fire){
                             fightEnd = true;
@@ -902,9 +1537,10 @@ class Fase1: public Laberinto{
                             cout << "Elegiste fuego..." << endl;
                             cout << "El transfugo lanza agua..." << endl << endl;
                             cout << "Haz perdido! Pierdes una vida..." << endl;
-                            player->takeDamage();
                             system("pause");
                             system("cls");
+                            player->takeDamage();
+
                         }
                         else if(transfugoAttack == ice){
                             fightEnd = true;
@@ -931,9 +1567,10 @@ class Fase1: public Laberinto{
                             cout << "Elegiste hielo..." << endl;
                             cout << "El transfugo lanza fuego..." << endl << endl;
                             cout << "Haz perdido! Pierdes una vida..." << endl;
-                            player->takeDamage();
                             system("pause");
                             system("cls");
+                            player->takeDamage();
+
                         }
                         else if(transfugoAttack == water){
                             fightEnd = true;
