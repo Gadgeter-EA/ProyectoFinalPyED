@@ -30,18 +30,20 @@ class Fase1: public Laberinto{
     private:
         PQuest tutorial;
         Player *player;
+        bool ended;
 
 
     public:
         Fase1(){
 
             string playerName;
+            ended = false;
 
-            cout << "Alpha Version" << endl;
+            cout << "Beta Version" << endl;
             system("pause");
             system("cls");
 
-            cout << endl << "Lo que vas a jugar llega hasta la midad de la fase 2. Errores y crasheos pueden ocurrir." << endl;
+            cout << endl << "Errores y crasheos pueden ocurrir." << endl;
             cout << "Teniendo en mente eso empecemos..." << endl;
             system("pause");
             system("cls");
@@ -86,6 +88,13 @@ class Fase1: public Laberinto{
             maze[2][4].setWays(false, false, true, false); // MERCADER
             maze[3][4].setWays(false, false, false, true); // LORE ROOM
             maze[4][4].setWays(true, false, true, false); // DEF ROOM
+
+            //TERCERA FASE
+            maze[3][1].setWays(true, false, false, true); // LLEGADA PUERTA PEQUEÑA
+            maze[3][0].setWays(false, true, false, false); // CAIN
+            maze[4][0].setWays(false, true, false, false); // VOMITO ARCOIRIS
+            maze[4][1].setWays(true, true, true, false); // Cuarto X
+            maze[4][2].setWays(true, false, false, false); // PUERTA GIGANTE
 
             string dialog = "\"El mundo es solo para aquellos que realmente lo valoran, Seras digno de el?\"\n"
                             "El frio penetrante del ambiente retuerce tus huesos, abres los ojos y de una profunda oscuridad poco a poco logras vislumbrar el ambiente que tienes frente a ti.\n";
@@ -138,9 +147,11 @@ class Fase1: public Laberinto{
             int option;
             bool goodOption;
 
-            while(true){
+            while(!ended){
 
                 playRoom(x, y);
+
+                if(ended) continue;
 
                 goodOption = false;
 
@@ -649,7 +660,7 @@ class Fase1: public Laberinto{
                         system("pause");
                         system("cls");
 
-                        dialog = "Tu capacidad de cargas de escudo a aumentado en uno.\n";
+                        dialog = "Tu capacidad de cargas de escudo ha aumentado en uno.\n";
                         writeDialogs(dialog);
                         system("pause");
                         system("cls");
@@ -848,7 +859,7 @@ class Fase1: public Laberinto{
                     system("pause");
                     system("cls");
 
-                    dialog = "Con la linterna alumbras hacia abajo y te horrorizas al ver lo que se aproxima hacia ti..\n"
+                    dialog = "Con la linterna alumbras hacia abajo y te horrorizas al ver lo que se aproxima hacia ti...\n"
                              "Un grupo de Transfugos estan escalando el acantilado con el fin de alcanzarte.\n";
                     writeDialogs(dialog);
                     system("pause");
@@ -863,7 +874,7 @@ class Fase1: public Laberinto{
 
                     dialog = "Sin tambalear abres tu mochila y sacas el frasco con piedras moradas, tomas un puniado de ellas y las lanzas hacia el rio."
                              "\nLas piedras de hielo caen sobre el agua haciendo algo de burbujas y congelando todo el rio a su paso, cada uno de los Transfugos\n"
-                             "quedan congelados al instante al estar mojados por el agua del rio.\n\n";
+                             "quedan congelados al instante, al estar mojados por el agua del rio.\n\n";
                     writeDialogs(dialog);
                     system("pause");
                     system("cls");
@@ -874,7 +885,7 @@ class Fase1: public Laberinto{
                     system("pause");
                     system("cls");
 
-                    dialog = player->getName() + ": Uff eso estubo muy cerca...\n";
+                    dialog = player->getName() + ": Uff eso estuvo muy cerca...\n";
                     writeDialogs(dialog);
                     system("pause");
                     system("cls");
@@ -916,21 +927,32 @@ class Fase1: public Laberinto{
                     system("pause");
                     system("cls");
 
-                    dialog = "Pero despues de mucho tiempo encontraste una habitacion en calma...\n"
-                             "Despues de tan agitada serie de eventos te sientas a pensar tu siguiente paso.\n";
+                    dialog = "Por el camino hacia abajo hay una diminuta puerta por la que apenas y cabe tu mano, no es posible pasar por ahi en este momento...\n";
+                    writeDialogs(dialog);
+                    system("pause");
+                    system("cls");
 
+                    dialog = "Despues de mucho tiempo encontraste una habitacion en calma...\n"
+                             "Luego de tan agitada serie de eventos te sientas a pensar tu siguiente paso.\n";
                     writeDialogs(dialog);
                     system("pause");
                     system("cls");
 
                     maze[x][y].setfirstTime(false);
                 }
+                else if(!maze[x][y].getfirstTime() && player->inventario.searchObjMision("Pocion Diminutiva")){
+
+                    string dialog = "Con la pocion que me dio CIEDA, puedo pasar por la puertita de abajo...\n";
+                    writeDialogs(dialog);
+                    system("pause");
+                    system("cls");
+                }
             }
             else if(x == 2 && y == 2){ //ESFINGE
 
                 if(maze[x][y].getfirstTime() && quest[0] == intro){
 
-                    string dialog = "Entras a la habitacion y te encuentras un cuarto con una pintura en su pared y una enorme escultura de una ESFINJE.\n";
+                    string dialog = "Entras a la habitacion y te encuentras un cuarto con una pintura en su pared y una enorme escultura de una ESFINGE.\n";
                     writeDialogs(dialog);
                     system("pause");
                     system("cls");
@@ -953,14 +975,14 @@ class Fase1: public Laberinto{
 
                     maze[x][y].setfirstTime(false);
                 }
-                else if(!maze[x][y].getfirstTime() && quest[0] == mid && !player->inventario.searchObjMision("Sangre de Esfinje")){ // HACIENDO MISION COSTURERA (PENDIENTE)
+                else if(!maze[x][y].getfirstTime() && quest[0] == mid && !player->inventario.searchObjMision("Sangre de Esfinge")){ // HACIENDO MISION COSTURERA (PENDIENTE)
 
-                    string dialog = "Entras a la habitacion y encuentras la estatua de la esfinje frente a ti.\n";
+                    string dialog = "Entras a la habitacion y encuentras la estatua de la ESFINGE frente a ti.\n";
                     writeDialogs(dialog);
                     system("pause");
                     system("cls");
 
-                    dialog = player->getName() + ": Donde diablos voy a encontrar a una esfinje?...\n";
+                    dialog = player->getName() + ": Donde diablos voy a encontrar a una ESFINGE?...\n";
                     writeDialogs(dialog);
                     system("pause");
                     system("cls");
@@ -990,7 +1012,7 @@ class Fase1: public Laberinto{
                     system("pause");
                     system("cls");
 
-                    dialog = "ESFINJE: YO SOY LA ESFINJE DE LOS DESEOS!\n"
+                    dialog = "ESFINGE: YO SOY LA ESFINGE DE LOS DESEOS!\n"
                              "Puedo otorgarte lo que desees, siempre y cuando aciertes el acertijo que ante ti presente!\n\n";
                     writeDialogs(dialog);
 
@@ -998,16 +1020,16 @@ class Fase1: public Laberinto{
                     bool passTree = false;
 
                     cout << "1)AHHHHH! NO ME COMAS!" << endl;
-                    cout << "2)Tu eres la esfinje?!..." << endl;
+                    cout << "2)Tu eres la ESFINGE?!..." << endl;
                     cout << "3)Vaya... eres muy alta..." << endl << endl;
                     cout << "Respondes: ";
                     cin >> option;
 
                     while(!passTree){
                         switch (option) {
-                            case 1: dialog = "ESFINJE: No lo hare siempre y cuando sigas las reglas.\n"; passTree = true; break;
-                            case 2: dialog = "ESFINJE: Acertaste mi invocador.\n"; passTree = true; break;
-                            case 3: dialog = "ESFINJE: Mi tamanio es el que tu me diste.\n"; passTree = true; break;
+                            case 1: dialog = "ESFINGE: No lo hare siempre y cuando sigas las reglas.\n"; passTree = true; break;
+                            case 2: dialog = "ESFINGE: Acertaste mi invocador.\n"; passTree = true; break;
+                            case 3: dialog = "ESFINGE: Mi tamanio es el que tu me diste.\n"; passTree = true; break;
                             default:  option = 1 + (rand() % (3+1)-1);
                         }
                     }
@@ -1018,13 +1040,13 @@ class Fase1: public Laberinto{
                     system("pause");
                     system("cls");
 
-                    dialog = "ESFINJE: Como ya lo mencione yo soy la ESFINJE y tu me invocaste con el proposito de que te cumpla un deseo accesible a mi.\n"
-                             "Deseas un poco de mi sangre no es cierto? Pues adivina mi acertijo y yo te otorgare un poco de ella.\n";
+                    dialog = "ESFINGE: Como ya lo mencione yo soy la ESFINGE y tu me invocaste con el proposito de que te cumpla un deseo accesible a mi.\n"
+                             "Deseas un poco de mi sangre no es cierto? Pues adivina mi acertijo y te otorgare un poco de ella.\n";
                     writeDialogs(dialog);
                     system("pause");
                     system("cls");
 
-                    dialog = "ESFINJE: Si fallas o te contestas algo que no, te hare danio...\n";
+                    dialog = "ESFINGE: Si fallas o te contestas algo que no, te hare danio...\n";
                     writeDialogs(dialog);
                     system("pause");
                     system("cls");
@@ -1033,7 +1055,7 @@ class Fase1: public Laberinto{
                     int answer = 0;
                     bool right = false;
 
-                    dialog = "ESFINJE: PREPARATE...\n";
+                    dialog = "ESFINGE: PREPARATE...\n";
                     writeDialogs(dialog);
                     system("pause");
                     system("cls");
@@ -1044,7 +1066,7 @@ class Fase1: public Laberinto{
                             case 0:
                                 dialog = "Si te lo hiciera, te desgarraria con mis zarpas, pero eso solo ocurrira si no lo captas. Y no es facil la respuesta de esta adivinanza,\n"
                                          "porque esta lejana, en tierras de bonanza, donde empieza la region de las montanias de arena y acaba la de los toros, la sangre, el mar y la verbena.\n"
-                                         "Y ahora contesta, tu, que has venido a jugar: ¿a que animal no te gustaraa besar?\n\n";
+                                         "Y ahora contesta, tu, que has venido a jugar: ¿a que animal no te gustaria besar?\n\n";
                                 writeDialogs(dialog);
 
                                 cout << "1)La arania" << endl;
@@ -1056,19 +1078,19 @@ class Fase1: public Laberinto{
 
                                 if(answer == 1){
                                     system("cls");
-                                    cout << "ESFINJE: LA ARANIA! CORRECTO!" << endl;
+                                    cout << "ESFINGE: LA ARANIA! CORRECTO!" << endl;
                                     system("pause");
                                     system("cls");
                                     right = true;
                                 }
                                 else{
                                     system("cls");
-                                    cout << "ESFINJE: INCORRECTO!" << endl;
+                                    cout << "ESFINGE: INCORRECTO!" << endl;
                                     cout << "Pierdes una vida." << endl;
                                     system("pause");
                                     system("cls");
                                     player->takeDamage();
-                                    cout << "ESFINJE: Repetire el acertijo..." << endl;
+                                    cout << "ESFINGE: Repetire el acertijo..." << endl;
                                     system("pause");
                                     system("cls");
                                 }
@@ -1087,19 +1109,19 @@ class Fase1: public Laberinto{
 
                                 if(answer == 2){
                                     system("cls");
-                                    cout << "ESFINJE: PURIDAD! CORRECTO!" << endl;
+                                    cout << "ESFINGE: PURIDAD! CORRECTO!" << endl;
                                     system("pause");
                                     system("cls");
                                     right = true;
                                 }
                                 else{
                                     system("cls");
-                                    cout << "ESFINJE: INCORRECTO!" << endl;
+                                    cout << "ESFINGE: INCORRECTO!" << endl;
                                     cout << "Pierdes una vida." << endl;
                                     system("pause");
                                     system("cls");
                                     player->takeDamage();
-                                    cout << "ESFINJE: Repetire el acertijo..." << endl;
+                                    cout << "ESFINGE: Repetire el acertijo..." << endl;
                                     system("pause");
                                     system("cls");
                                 }
@@ -1118,19 +1140,19 @@ class Fase1: public Laberinto{
 
                                 if(answer == 3){
                                     system("cls");
-                                    cout << "ESFINJE: EL 8! CORRECTO!" << endl;
+                                    cout << "ESFINGE: EL 8! CORRECTO!" << endl;
                                     system("pause");
                                     system("cls");
                                     right = true;
                                 }
                                 else{
                                     system("cls");
-                                    cout << "ESFINJE: INCORRECTO!" << endl;
+                                    cout << "ESFINGE: INCORRECTO!" << endl;
                                     cout << "Pierdes una vida." << endl;
                                     system("pause");
                                     system("cls");
                                     player->takeDamage();
-                                    cout << "ESFINJE: Repetire el acertijo..." << endl;
+                                    cout << "ESFINGE: Repetire el acertijo..." << endl;
                                     system("pause");
                                     system("cls");
                                 }
@@ -1138,17 +1160,17 @@ class Fase1: public Laberinto{
                         }
                     }while(!right);
 
-                    dialog = "Despues de acertar su acertijo la esfije levanta su mano y con su garra se corta la otra pata,\n"
+                    dialog = "Despues de acertar su acertijo, la ESFINGE levanta su mano y con su garra se corta la otra pata,\n"
                              "de su extremidad chorrea un liquido plateado que cae en un frasco y te la acerca con su cola.\n";
                     writeDialogs(dialog);
                     system("pause");
                     system("cls");
 
-                    dialog = "ESFINJE: Usala con sabiduria.\nObjeto de mision Sangre de Esfinje aniadido al inventario\n";
+                    dialog = "ESFINGE: Usala con sabiduria.\nObjeto de mision Sangre de Esfinge aniadido al inventario\n";
                     writeDialogs(dialog);
                     system("pause");
                     system("cls");
-                    player->inventario.addObjMision("Sangre de Esfinje", "CIEDA menciono que la usara para cubrir una embarcacion");
+                    player->inventario.addObjMision("Sangre de Esfinge", "CIEDA menciono que la usara para cubrir una embarcacion");
 
                     if(player->inventario.searchObjMision("Embarcacion")){
                         quest[0] = mid2;
@@ -1186,9 +1208,33 @@ class Fase1: public Laberinto{
                     system("pause");
                     system("cls");
                 }
+                else if(!maze[x][y].getfirstTime() && quest[0] == mid2 && player->inventario.searchObjMision("Remaches Magicos") && player->inventario.searchObjMision("Embarcacion")
+                        && player->inventario.searchObjMision("Sangre de Esfinge")){
+
+                    string dialog = "Tienes todos los objetos: Con los remaches reparas la \"Embarcacion\" y con la Sangre de Esfinje la pintas.\n";
+                    writeDialogs(dialog);
+                    system("pause");
+                    system("cls");
+
+                    player->inventario.delObjMision("Remaches Magicos"); player->inventario.delObjMision("Embarcacion");
+                    player->inventario.delObjMision("Sangre de Esfinge");
+
+                    dialog = "Ahora puede pasar por el cuarto con lava\n";
+                    writeDialogs(dialog);
+                    system("pause");
+                    system("cls");
+
+                    dialog = "Objeto de mision Embarcacion aprueba de lava aniadido al inventario.\n";
+                    writeDialogs(dialog);
+                    system("pause");
+                    system("cls");
+                    player->inventario.addObjMision("Embarcacion aprueba de lava", "Con esto puedo pasar el cuarto con lava");
+
+                    maze[x][y].setWays(true, false, true, true);
+                }
 
             }
-            else if(x == 1 && y == 3){
+            else if(x == 1 && y == 3){ // CIEDA
 
                 if(maze[x][y].getfirstTime()){
 
@@ -1203,18 +1249,18 @@ class Fase1: public Laberinto{
                     system("cls");
 
                     dialog = "DESCONOCIDA: *sniff* \t*hummmm*\n"
-                             "Sollosa la mujer...\n";
+                             "Solloza la mujer...\n";
                     writeDialogs(dialog);
                     system("pause");
                     system("cls");
 
-                    dialog = "Te acercas con lentitud esperando lo peor, la mujer se da cuenta de tu precencia y con tristeza te dice...\n";
+                    dialog = "Te acercas con lentitud esperando lo peor, la mujer se da cuenta de tu presencia y con tristeza te dice...\n";
                     writeDialogs(dialog);
                     system("pause");
                     system("cls");
 
                     dialog = "DESCONOCIDA: Un viajero...\n\n"
-                             "Dice mientras se seca los mocos y se limpia los hinchados ojos de tanto llorar.\n\n";
+                             "Dice mientras se seca los mocos y se limpia los ojos hinchados de tanto llorar.\n\n";
                     writeDialogs(dialog);
 
                     int option = 0;
@@ -1228,8 +1274,8 @@ class Fase1: public Laberinto{
 
                     while(!passTree){
                         switch (option) {
-                            case 1: dialog = "DESCONOCIDA: Ohhhh, esta es mi triste situacion, mi maldicion *sniff*\nTe rezo REY CARNESI que me salves de esta situacion...\n"; passTree = true; break;
-                            case 2: dialog = "DESCONOCIDA: Yo no represento un peligro para ti viajero... *sniff*, de hecho no se nada sobre pelear...\n"; passTree = true; break;
+                            case 1: dialog = "DESCONOCIDA: Ohhhh, esta es mi triste situacion, mi maldicion *sniff*\nTe rezo REY CARMESI que me salves de esta situacion...\n"; passTree = true; break;
+                            case 2: dialog = "DESCONOCIDA: Yo no represento un peligro para ti, viajero... *sniff*, de hecho no se nada sobre pelear...\n"; passTree = true; break;
                             case 3: dialog = "DESCONOCIDA: Oh... *sniff* Me disculpo por que me veas en esta situacion....\n"; passTree = true; break;
                             default:  option = 1 + (rand() % (3+1)-1);
                         }
@@ -1246,7 +1292,7 @@ class Fase1: public Laberinto{
                     system("pause");
                     system("cls");
 
-                    dialog = player->getName() + ": Despojada... de que?\n";
+                    dialog = player->getName() + ": Despojada... em, de que?\n";
                     writeDialogs(dialog);
                     system("pause");
                     system("cls");
@@ -1264,7 +1310,7 @@ class Fase1: public Laberinto{
                     while(!passTree){
                         switch (option) {
                             case 1: dialog = "CIEDA: Es una complicada historia... pero... creo te la puedo resumir.\n"; passTree = true; break;
-                            case 2: dialog = "CIEDA: NO SEAS GROCERO!... Perdon... Hablo enserio, mi santuario de costura si es hermoso.\n"; passTree = true; break;
+                            case 2: dialog = "CIEDA: NO SEAS GROSERO!... Perdon... Hablo enserio, mi santuario de costura es hermoso.\n"; passTree = true; break;
                             case 3: dialog = "CIEDA: Ese maldito ser me arrebato lo que tenia...\n"; passTree = true; break;
                             default:  option = 1 + (rand() % (3+1)-1);
                         }
@@ -1289,7 +1335,7 @@ class Fase1: public Laberinto{
 
 
                     dialog = "CEIDA: Despues de anios de vivir, ahi crecio demasiado para caber en ese cuarto por lo que, sabiendo que mi santuario de costura es la habitacion mas grande del laberinto,\n"
-                             "me expulso a pura llamarada, y para evitar que alguien intentara llegar al cuarto del LAGO DE LAS LAGRIMAS, inundo de lava el cuarto que da acceso al lago y ahora\n"
+                             "me expulso a pura llamarada, y para evitar que alguien intentara llegar al cuarto del LAGO DE LAS MIL LAGRIMAS, inundo de lava el cuarto que da acceso al lago y ahora\n"
                              "no hay forma de correrlo de mi santuario...\n\n";
                     writeDialogs(dialog);
 
@@ -1314,7 +1360,7 @@ class Fase1: public Laberinto{
                     system("pause");
                     system("cls");
 
-                    dialog = "CIEDA: Veraz, yo pertenezco a la raza de los artesanos, durante siglos trabajamos bajo el yugo de otra raza, pero con la llegada del REY CARMESI,\n"
+                    dialog = "CIEDA: Veras, yo pertenezco a la raza de los artesanos, durante siglos trabajamos bajo el yugo de otra raza, pero con la llegada del REY CARMESI,\n"
                              "nos libero y nos ofrecio crear, bordar, coser y diseniar lo que nosotras quisieramos sin obedecer a nada ni nadie...\n";
                     writeDialogs(dialog);
                     system("pause");
@@ -1330,8 +1376,8 @@ class Fase1: public Laberinto{
                     system("pause");
                     system("cls");
 
-                    dialog = "CIEDA: No..., solo el agua de las mil lagrimas es capaz de derrotarlo, y su acceso esta lleno de lava.\n"
-                             "La unica cosa que es inmune a tales temperaturas es la sangre de Esfinje y encarar a esa bestia es... una locura.\n";
+                    dialog = "CIEDA: No..., solo el agua de el LAGO DE LAS MIL LAGRIMAS es capaz de derrotarlo, y su acceso esta lleno de lava.\n"
+                             "La unica cosa que es inmune a tales temperaturas es la sangre de ESFINGE y encarar a esa bestia es... una locura.\n";
                     writeDialogs(dialog);
                     system("pause");
                     system("cls");
@@ -1341,10 +1387,10 @@ class Fase1: public Laberinto{
                     system("pause");
                     system("cls");
 
-                    dialog = "CIEDA: Por todos los estambres! NO! La sangre de esfinje es sumamante toxica con todo lo vivo.\n"
+                    dialog = "CIEDA: Por todos los estambres! NO! La sangre de ESFINGE es sumamante toxica con todo lo vivo.\n"
                              "La unica opcion que tienes seria pintar una embarcacion con la sangre y se volvera inmune a la lava,\n"
                              "creo que por aqui cerca hay un mercader el cual es propietario de toda clase de articulos,\n"
-                             "tal vez tenga alguna embarcacion que puedas pintar con la sangre de esfinje...\n\n";
+                             "tal vez tenga alguna embarcacion que puedas pintar con la sangre de ESFINGE...\n\n";
                     writeDialogs(dialog);
                     system("pause");
                     system("cls");
@@ -1408,7 +1454,7 @@ class Fase1: public Laberinto{
                         system("pause");
                         system("cls");
 
-                        dialog = "Tu capacidad de cargas de escudo a aumentado en uno.\n";
+                        dialog = "Tu capacidad de cargas de escudo ha aumentado en uno.\n";
                         writeDialogs(dialog);
                         system("pause");
                         system("cls");
@@ -1448,16 +1494,1175 @@ class Fase1: public Laberinto{
                     system("pause");
                     system("cls");
                 }
+                else if(!maze[x][y].getfirstTime() && quest[0] == finall && !player->inventario.searchObjMision("Pocion Diminutiva")){
+
+                    string dialog = "Entras al cuarto donde se encuentra CIEDA con algunas cortadas, pero vivo...\n";
+                    writeDialogs(dialog);
+                    system("pause");
+                    system("cls");
+
+                    dialog = "CIEDA: LO HICISTE! LO LOGRASTE! ERES TODO UN VERDADERO HEROE!\n";
+                    writeDialogs(dialog);
+                    system("pause");
+                    system("cls");
+
+                    dialog = "Sonries un poco hacia CIEDA, ella te regresa el gesto.\n";
+                    writeDialogs(dialog);
+                    system("pause");
+                    system("cls");
+
+                    dialog = "CIEDA: Siempre estare en deuda por tu azania, ahora puedo continuar con el trabajo que amo...\n"
+                             "Como la costurera de palabra que soy te entrego lo que prometi.\n";
+                    writeDialogs(dialog);
+                    system("pause");
+                    system("cls");
+
+                    player->inventario.addObjMision("Pocion Diminutiva", "Pocion capaz de reducir tu tamanio dada por CIEDA");
+
+                    dialog = "Objeto de mision Pocion Diminutiva aniadido al inventario.\n";
+                    writeDialogs(dialog);
+                    system("pause");
+                    system("cls");
+
+                    dialog = "CIEDA: Te deseo la mejor de las suertes viajero!\n";
+                    writeDialogs(dialog);
+                    system("pause");
+                    system("cls");
+
+                    maze[2][1].setWays(true, true, false, true);
+                }
+
+            }else if(x == 0 && y == 3){ // DRAGON
+
+                if(maze[x][y].getfirstTime() && !player->inventario.searchObjMision("Agua de Lagrimas")){
+
+                    string dialog = "Entras al cuarto e inmediatamente una ola de calor te golpea el rostro.\n";
+                    writeDialogs(dialog);
+                    system("pause");
+                    system("cls");
+
+                    dialog = "DUO: QUE ESTAS HACIENDO AQUI?!?!?! LARGATE O TE CARBONIZARE!\n";
+                    writeDialogs(dialog);
+                    system("pause");
+                    system("cls");
+
+                    dialog = "Sales corriendo del cuarto de inmediato...\n";
+                    writeDialogs(dialog);
+                    system("pause");
+                    system("cls");
+
+                    dialog = "CIEDA: TEN MAS CUIDADO! PORFAVOR!...\n"
+                             "No deberias entrar ahi sin EL AGUA DE LAS MIL LAGRIMAS.\n";
+                    writeDialogs(dialog);
+                    system("pause");
+                    system("cls");
+
+                    this->x++; // Regresamos con la costurera
+                }
+                else if(maze[x][y].getfirstTime() && quest[0] == mid2 && player->inventario.searchObjMision("Agua de Lagrimas")){
+
+                    string dialog = "Entras al cuarto con sigilo mientras el dragon duerme, te acercas por detras y abres el frasco que contiene el Agua de Lagrimas,\n"
+                                    "el sonido despierta al dragon y este se voltea freneticamente...\n";
+                    writeDialogs(dialog);
+                    system("pause");
+                    system("cls");
+
+                    dialog = "DUO: Has vuelto patetico huma....\n";
+                    writeDialogs(dialog);
+                    system("pause");
+                    system("cls");
+
+                    dialog = "El dragon se da cuenta de lo que tienes en la mano y su semblante cambia a uno de terror inmediatamente.\n";
+                    writeDialogs(dialog);
+                    system("pause");
+                    system("cls");
+
+                    dialog = "DUO: NO! BAJA ESO! NO LO HAGAS! PUEDO SER UTIL... T-TE PUEDO HABLAR DEL SECRETO DEL REY C...\n";
+                    writeDialogs(dialog);
+                    system("pause");
+                    system("cls");
+
+                    dialog = "Lanzas el frasco con el agua a la cara del dragon este lanza un grito de agonia y poco a poco se transforma en cristal,\n"
+                             "el ser logra lanzar un doloroso ultimo grito y explota en miles de cristales...\n";
+                    writeDialogs(dialog);
+                    system("pause");
+                    system("cls");
+
+                    player->inventario.delObjMision("Agua de Lagrimas");
+                    maze[x][y].setfirstTime(false);
+                    quest[0] = finall;
+                }
 
             }
-            else{ // Cuarto default
+            else if(x == 1 && y == 4){ // LLAVE+
 
-                string dialog = "Cuarto default\n";
+                if(maze[x][y].getfirstTime() && quest[0] == mid){
+
+                    string dialog = "Entras a una habitacion oscura, sacas tu linterna y te das cuenta que el candelabro que iluminaba la habitacion esta apagado.\n";
+                    writeDialogs(dialog);
+                    system("pause");
+                    system("cls");
+
+                    dialog = "Del fondo de la habitacion sale un Transfugo que corre desesperado hacia ti...\n";
+                    writeDialogs(dialog);
+                    system("pause");
+                    system("cls");
+
+                    elementalFight();
+
+                    dialog = "El Transfugo se hace polvo frente a ti y suelta una llave plateada con un diamante incrustado en el amarre.\n"
+                             "Objeto de mision Llave de plata aniadido al inventario.\n";
+                    writeDialogs(dialog);
+                    system("pause");
+                    system("cls");
+                    player->inventario.addObjMision("Llave de plata", "Debe servir para abrir uno de esos cofres legendarios...");
+
+                    maze[x][y].setfirstTime(false);
+                }
+
+            }
+            else if( x == 0 && y == 4){ //VIDA+
+
+                if(maze[x][y].getfirstTime() && player->inventario.searchObjMision("Llave de plata")){
+
+                    string dialog = "Entras a la habitacion y te encuentras con un cofre plateado con grabado.\n"
+                                    "Con la llave plateada de tu mochila abres el cofre.\n";
+                    writeDialogs(dialog);
+                    system("pause");
+                    system("cls");
+
+                    dialog = "Es una pocion, pero no se parece a las demas, brilla de una manera reconfortante.\n"
+                             "Decides beberla...\n";
+                    writeDialogs(dialog);
+                    system("pause");
+                    system("cls");
+
+                    dialog = "Tu vida maxima ha aumentado en uno.\n";
+                    writeDialogs(dialog);
+                    system("pause");
+                    system("cls");
+                    player->increaseMaxLife();
+
+                    player->inventario.delObjMision("Llave de plata");
+                    maze[x][y].setfirstTime(false);
+
+                }
+            }
+            else if(x == 2 && y == 4){
+
+                if(maze[x][y].getfirstTime() && quest[0] == mid && player->inventario.searchObjMision("Diamante de Gota")){
+
+                    string dialog = "Entras a la habitacion por una puerta de cristal que tiene grabada la frase \"El comercio beneficia a los correctos\".\n"
+                                    "Abres la puerta y una lluvia de polvo cae sobre ti.\n";
+                    writeDialogs(dialog);
+                    system("pause");
+                    system("cls");
+
+                    dialog = player->getName() + ": Cof.. Coff..\n"
+                                                 "Estornudas y toces con fuerza...\n";
+                    writeDialogs(dialog);
+                    system("pause");
+                    system("cls");
+
+                    dialog = "En el fondo una figura se levanta freneticamente alertado por tu presencia.\n";
+                    writeDialogs(dialog);
+                    system("pause");
+                    system("cls");
+
+                    dialog = "DESCONOCIDO: Alejate asqueroso Transfugo o te volvere polvo! AHHHHHHHH!\n\n"
+                             "El pequenio ser enciende un candelabro y logras observarlo por completo.\n";
+                    writeDialogs(dialog);
+                    system("pause");
+                    system("cls");
+
+                    dialog = "El hombre que lanza el grito tiene una barba blanca y un pelo desalineado, pero su estatura no sobrepasa el metro, en su mano sostiene una espada muy vieja.\n"
+                             "La pequenia persona se da cuenta que no eres un Transfugo y deja de gritar\n";
+                    writeDialogs(dialog);
+                    system("pause");
+                    system("cls");
+
+                    dialog = "DESCONOCIDO: Oh.. ohh! Por el REY CARMESI! Eres un viajero!\n\n"
+                             "El pequenio ser cambia su semblante por completo a uno de emocion y baja de la mesa en donde estaba parado.\n"
+                             "Al hacerlo te das cuenta que apenas y te llega a la cintura...\n";
+                    writeDialogs(dialog);
+                    system("pause");
+                    system("cls");
+
+                    dialog = "DESCONOCIDO: Hace siglos que no veo un viajero por estos rumbos...\n\n";
+                    writeDialogs(dialog);
+
+                    int option = 0;
+                    bool passTree = false;
+
+                    cout << "1)Que eres? Un leniador de bonsais de obsidiana? jajaja" << endl;
+                    cout << "2)Quien eres tu?" << endl;
+                    cout << "3)Eres el Mercader...?" << endl << endl;
+                    cout << "Respondes: ";
+                    cin >> option;
+
+                    while(!passTree){
+                        switch (option) {
+                            case 1: dialog = "DESCONOCIDO: Provocame y cortare el cuello!\nDigo...\n"; passTree = true; break;
+                            case 2: dialog = "DESCONOCIDO: Oh vaya perdona mis modales, permiteme presentarme.\n"; passTree = true; break;
+                            case 3: dialog = "DESCONOCIDO: Eso es correcto, dejame introducirme.\n"; passTree = true; break;
+                            default:  option = 1 + (rand() % (3+1)-1);
+                        }
+                    }
+
+                    passTree = false;
+                    system("cls");
+                    writeDialogs(dialog);
+                    system("pause");
+                    system("cls");
+
+                    dialog = "ICICLES: Soy ICICLES el enano mercader, me encargo de proveer a los viajeros de objetos que necesiten, claro..., siempre y cuando puedan otorgar algo a cambio...\n";
+                    writeDialogs(dialog);
+                    system("pause");
+                    system("cls");
+
+                    dialog = "El enano alza las manos para dar un efecto de impresion, pero solo logra levantar una nube de polvo a su alrededor.\n";
+                    writeDialogs(dialog);
+                    system("pause");
+                    system("cls");
+
+                    dialog = "ICICLES: Pero como te puedes dar cuenta hace mucho que no entro en negocios con nadie *cof* *cof*.\n"
+                             "Dime viajero... Hay algo aqui que te interese para hacer un trueque?\n";
+                    writeDialogs(dialog);
+                    system("pause");
+                    system("cls");
+
+                    dialog = "Con la mirada examinas la tienda y en un rincon polvoriento encuentras una pequenia lancha rota en la que apenas y podria entrar un ninio.\n\n";
+                    writeDialogs(dialog);
+
+                    cout << "1)Que precio tiene este cachibache?" << endl;
+                    cout << "2)Vaya este barquito se ve interesante..." << endl;
+                    cout << "3)Que es esto?" << endl << endl;
+                    cout << "Respondes: ";
+                    cin >> option;
+
+                    while(!passTree){
+                        switch (option) {
+                            case 1: dialog = "ICICLES: Cachibache?!\n"; passTree = true; break;
+                            case 2: dialog = "ICICLES: No es un barco, ignorante!\n"; passTree = true; break;
+                            case 3: dialog = "ICICLES: Vaya, tienes buen ojo...\n"; passTree = true; break;
+                            default:  option = 1 + (rand() % (3+1)-1);
+                        }
+                    }
+
+                    passTree = false;
+                    system("cls");
+                    writeDialogs(dialog);
+                    system("pause");
+                    system("cls");
+
+                    dialog = "ICICLES: Esta es una lancha de madera de arbol de obsidiana, tiene unos pequeniiiiiitos rayones pero es completamente funcional.... \n";
+                    writeDialogs(dialog);
+                    system("pause");
+                    system("cls");
+
+                    dialog = "ICICLES: Creo...\n";
+                    writeDialogs(dialog);
+                    system("pause");
+                    system("cls");
+
+                    dialog = "ICICLES: Que puedes ofrecerme por ella?\n";
+                    writeDialogs(dialog);
+                    system("pause");
+                    system("cls");
+
+                    dialog = "Primero le ofreces un puniado de piedras elementales pero el frunce el cenio y dice...\n";
+                    writeDialogs(dialog);
+                    system("pause");
+                    system("cls");
+
+                    dialog = "ICICLES: Esas cosas solo le funcionan al portador original asi que olvidalo.\n";
+                    writeDialogs(dialog);
+                    system("pause");
+                    system("cls");
+
+                    dialog = "Mientras vacias tu mochila el enano ve el diamante en forma de gota y sus ojos se vuelven enormes.\n";
+                    writeDialogs(dialog);
+                    system("pause");
+                    system("cls");
+
+                    dialog = "ICICLES: Una Lagrima de Diosa! De donde sacaste eso!?\n\n";
+                    writeDialogs(dialog);
+
+                    cout << "1)Que esta baratij..... digo claro es un diamante muuuy valioso..." << endl;
+                    cout << "2)Estas dispuesto a hablar de negocios?" << endl;
+                    cout << "3)Lo quieres... Realmente lo quieres?" << endl << endl;
+                    cout << "Respondes: ";
+                    cin >> option;
+
+                    while(!passTree){
+                        switch (option) {
+                            case 1: dialog = "ICICLES: Si... SI! dejame sostenerla solo un segundo.\n"; passTree = true; break;
+                            case 2: dialog = "ICICLES: Si! Por favor!\n"; passTree = true; break;
+                            case 3: dialog = "ICICLES: Te lo imploro... hagamos negocios.\n"; passTree = true; break;
+                            default:  option = 1 + (rand() % (3+1)-1);
+                        }
+                    }
+
+                    passTree = false;
+                    system("cls");
+                    writeDialogs(dialog);
+                    system("pause");
+                    system("cls");
+
+                    dialog = "ICICLES: Esta Lagrima de Diosa acompleta tu compra de este cachibache.... digo esta gran y lujosa lancha, claro que si...\n\n"
+                             "Le das una mirada sospechoza al enano pero aceptas el trato y el pequenio hombrecillo te entrega la pequenia embarcacion.\n";
+                    writeDialogs(dialog);
+                    system("pause");
+                    system("cls");
+
+                    dialog = "Objeto de mision Embarcacion aniadido al inventario.\n";
+                    writeDialogs(dialog);
+                    system("pause");
+                    system("cls");
+
+                    dialog = "ICICLES: Ahora largo...!\n";
+                    writeDialogs(dialog);
+                    system("pause");
+                    system("cls");
+
+                    player->inventario.addObjMision("Embarcacion", "Creo que no fue un buen trato...");
+                    player->inventario.delObjMision("Diamante de Gota");
+                    maze[x][y].setfirstTime(false);
+
+                    if(player->inventario.searchObjMision("Sangre de Esfinge")){
+                            quest[0] = mid2;
+                    }
+                }
+
+            }
+            else if(x == 3 && y == 3){ // CUARTO DE LAVA
+
+                if(maze[x][y].getfirstTime() && quest[0] == mid2){
+
+                    string dialog = "Entras en la lancha y te adentras en el cuarto lleno de lava, la lancha es muy pequenia y estas muy apretado pero lentamente avanzas en el cuarto...\n";
+                    writeDialogs(dialog);
+                    system("pause");
+                    system("cls");
+
+                    maze[x][y].setfirstTime(false);
+                }
+            }
+            else if(x == 4 && y == 3){ // LAGO DE LAS MIL LAGRIMAS
+
+                if(maze[x][y].getfirstTime() && quest[0] == mid2){
+
+                    string dialog = "Te bajas de la lancha en la costa y puedes admirar en el centro de esta habitacion un lago iluminado por la luna...\n"
+                                    "Te acercas y llenas el frasco donde antes estaba la Sangre de Esfinge de agua del LAGO DE LAS MIL LAGRIMAS.\n";
+                    writeDialogs(dialog);
+                    system("pause");
+                    system("cls");
+
+                    dialog = "Objeto de mision Agua de Lagrimas aniadido al inventario.\n";
+                    writeDialogs(dialog);
+                    system("pause");
+                    system("cls");
+
+                    player->inventario.addObjMision("Agua de Lagrimas", "Lo unico que mata al dragon..");
+
+                    maze[x][y].setfirstTime(false);
+                }
+
+            }
+            else if(x == 4 && y == 4){
+
+                if(maze[x][y].getfirstTime() && quest[0] == mid2){
+
+                    string dialog = "Entras a la habitacion y te encuentras un cartel escrito en piedra.\n";
+                    writeDialogs(dialog);
+                    system("pause");
+                    system("cls");
+
+                    dialog = "\"En el cuarto de la izquierda se encuentra el LAGO DE LAS MIL LAGRIMAS, fundado por nuestro gobernante el REY CARMESI\".\n";
+                    writeDialogs(dialog);
+                    system("pause");
+                    system("cls");
+
+                    dialog = "En el pie de la pintura hay una leyenda que dice \"EL REY CARMESI el unificador de todos los pueblos...\"\n";
+                    writeDialogs(dialog);
+                    system("pause");
+                    system("cls");
+
+                    maze[x][y].setfirstTime(false);
+                }
+            }
+            else if(x == 3 && y == 1){
+
+                if(maze[x][y].getfirstTime()){
+
+                    string dialog = "Vas caminando poco a poco por el tunel, y esta tan obscuro que comienzas a caminar cada vez mas rapido por el miedo que te da.\n"
+                                    "Al terminar de cruzar, vuelves a tu tamanio original, dandote cuenta de que ya no puedes volver atras...\n"
+                                    "Al llegar al cuarto, te encuentras con otro Transfugo. Es un ser mas habilidadoso, pero estas dispuesto a derrocarlo como siempre...\n\n";
+                    writeDialogs(dialog);
+                    system("pause");
+                    system("cls");
+
+                    elementalFight();
+
+                    player->inventario.delObjMision("Pocion Diminutiva");
+
+                    dialog = "Acabando el combate, tienes que realizar tu siguiente movimiento.\n";
+                    writeDialogs(dialog);
+                    system("pause");
+                    system("cls");
+                    maze[x][y].setfirstTime(false);
+                }
+                else if(!maze[x][y].getfirstTime() && (quest[1] == mid || quest[1] == intro)){
+
+                    string dialog = "Estas en el cuarto donde se encuentra la puerta diminuta...\n";
+                    writeDialogs(dialog);
+                    system("pause");
+                    system("cls");
+                }
+            }else if(x == 3 && y == 0){
+
+                if(maze[x][y].getfirstTime()){ //CUARTO DE CAIN
+
+                    string dialog = "Vas caminando, y encuentras en tu camino a un... mercenario...?. Lo miras y parece que esta enfermo,\n"
+                                    "asi que decides arriesgarte...\n";
+                    writeDialogs(dialog);
+                    system("pause");
+                    system("cls");
+
+                    dialog = "ERRANTE: Quien esta ahi?\n";
+                    writeDialogs(dialog);
+                    system("pause");
+                    system("cls");
+
+                    dialog = "Decides acercarte, asi que sacas tu linterna y te acercas con el.\n";
+                    writeDialogs(dialog);
+                    system("pause");
+                    system("cls");
+
+                    dialog = "ERRANTE: Conque un viajero.\n"
+                             "Cuanto tiempo ha sido desde que he visto a otra persona dentro de este viejo laberinto...\n";
+                    writeDialogs(dialog);
+                    system("pause");
+                    system("cls");
+
+                    dialog = player->getName() + ": Esto... Y quien es usted?\n";
+                    writeDialogs(dialog);
+                    system("pause");
+                    system("cls");
+
+                    dialog = "CAIN: Que modales los mios... te ofrezco una disculpa, joven viajero. Soy el errante CAIN.\n";
+                    writeDialogs(dialog);
+                    system("pause");
+                    system("cls");
+
+                    dialog = player->getName() + ": Un errante?\n";
+                    writeDialogs(dialog);
+                    system("pause");
+                    system("cls");
+
+                    dialog = "CAIN: Si, podriamos decir que soy un vagabundo. Voy de lugar en lugar sin un destino fijo.\n"
+                             "Llevo siglos viviendo en este laberinto.\n";
+                    writeDialogs(dialog);
+                    system("pause");
+                    system("cls");
+
+                    dialog = player->getName() + ": Pero, pareces humano... Como es que has vivido siglos?\n";
+                    writeDialogs(dialog);
+                    system("pause");
+                    system("cls");
+
+                    dialog = "CAIN: Como explicarte chico. Efectivamente, yo soy humano. Sin embargo, este laberinto te mantiene joven.\n"
+                             "Es como si el tiempo se detuviera estando aqui...\n";
+                    writeDialogs(dialog);
+                    system("pause");
+                    system("cls");
+
+                    dialog = "CAIN: Mm, han pasado tantos anios... que he perdido la nocion del tiempo.\n"
+                             "Pueden ser 200 anios... o habran sido 300? Desafortunadamente no lo recuerdo, y la verdad me da igual...*COUGH COUGH*\n";
+                    writeDialogs(dialog);
+                    system("pause");
+                    system("cls");
+
+                    dialog = "El errante comienza a toser sangre.\n"  ;
+                    writeDialogs(dialog);
+                    system("pause");
+                    system("cls");
+
+                    dialog = "CAIN: Escucha chico..., aunque este laberinto me haya mantenido vivo, no me queda mucho tiempo de vida.\n"
+                             "Estoy muy enfermo y no sé cuanto tiempo me quede.\n";
+                    writeDialogs(dialog);
+                    system("pause");
+                    system("cls");
+
+                    dialog = player->getName() + ": Te puedo ayudar de alguna manera?\n";
+                    writeDialogs(dialog);
+                    system("pause");
+                    system("cls");
+
+                    dialog = "CAIN: Si...hehe.. Por lo que puedo ver parece que quieres encontrar una salida de este laberinto, No?.\n";
+                    writeDialogs(dialog);
+                    system("pause");
+                    system("cls");
+
+                    dialog = player->getName() + ": Emm, si...\n";
+                    writeDialogs(dialog);
+                    system("pause");
+                    system("cls");
+
+                    dialog = "CAIN: Hagamos un trato. Existe un gnomo que vomita arco iris, y ese liquido es capaz de curarte de cualquier mal.\n"
+                             "Si logras conseguir un poco, podria vivir, y te ayudare a salir de aqui... *COUGH COUGH*\n";
+                    writeDialogs(dialog);
+                    system("pause");
+                    system("cls");
+
+                    dialog = player->getName() + ": Esta bien. Tenemos un trato, lo ayudare para que usted pueda mejorar y seguir viviendo.\n";
+                    writeDialogs(dialog);
+                    system("pause");
+                    system("cls");
+
+                    dialog = "CAIN: Muchas gracias muchacho. *COUGH COUGH*.\n"
+                             "Esperare aqui. Mucha suerte...la necesitaras\n";
+                    writeDialogs(dialog);
+                    system("pause");
+                    system("cls");
+
+                    maze[x][y].setfirstTime(false);
+                    quest[1] = mid;
+
+                }else if(!maze[x][y].getfirstTime() && !player->inventario.searchObjMision("Vomito de Gnomo Mutado Arcoiris") && quest[1] != finall){
+
+                    string dialog = "CAIN: Todavia nada chico?. Espero puedas ayudarme *COUGH COUGH*...\n";
+                    writeDialogs(dialog);
+                    system("pause");
+                    system("cls");
+                }
+                else if(!maze[x][y].getfirstTime() && player->inventario.searchObjMision("Vomito de Gnomo Mutado Arcoiris") && quest[1] == mid2){
+
+                    string dialog = "Vuelves a acercarte con CAIN, y sacas el frasco de vomito de arco iris del gnomo magico mutante.\n"
+                                    "Te lo arrebata bruscamente de las manos.\n";
+                    writeDialogs(dialog);
+                    system("pause");
+                    system("cls");
+
+                    dialog = "Al momento de que se lo toma, le cambia el gesto al errante. Vuelve a verse vivido.\n";
+                    writeDialogs(dialog);
+                    system("pause");
+                    system("cls");
+
+                    dialog = "CAIN: Gracias chico. Me has salvado la vida, me toca cumplir con mi parte del trato...\n";
+                    writeDialogs(dialog);
+                    system("pause");
+                    system("cls");
+
+                    dialog = "CAIN: Se ve que realmente quieres salir de aqui, asi que te dare la llave que lleva al final de este laberinto.\n";
+                    writeDialogs(dialog);
+                    system("pause");
+                    system("cls");
+                    player->inventario.addObjMision("Llave Final", "Llave para abrir la enorme puerta.");
+
+                    dialog = "Objeto de mision Llave Final aniadido al inventario.\n";
+                    writeDialogs(dialog);
+                    system("pause");
+                    system("cls");
+
+                    dialog = player->getName() + ": Ahora podremos salir de este lugar. Vamonos!\n";
+                    writeDialogs(dialog);
+                    system("pause");
+                    system("cls");
+
+                    dialog = "CAIN: Meeeh, yo me quedo aqui chico...\n";
+                    writeDialogs(dialog);
+                    system("pause");
+                    system("cls");
+
+                    dialog = "Te quedas mirando a CAIN sorprendido.\n";
+                    writeDialogs(dialog);
+                    system("pause");
+                    system("cls");
+
+                    dialog = "CAIN: Que tiene?!...\n";
+                    writeDialogs(dialog);
+                    system("pause");
+                    system("cls");
+
+                    dialog = "CAIN: Ahhh, esta bien te contare algo, pero mas vale que no le digas a nadie.\n"
+                             "La verdad, no creo tener nada que valga la pena afuera chico, digo... ha pasado tanto tiempo...\n"
+                             "No hay nada que me motive a salir, ademas... la vida aqui no esta taaaan mal una vez te acostumbras.\n\n";
+                    writeDialogs(dialog);
+                    system("pause");
+                    system("cls");
+
+                    dialog = "CAIN: En fin, tu se libre. No desperdicies tu vida como yo lo hice con la mia. No sabes como me arrepiento hoy en dia\n"
+                             "pero, ya no hay nada que pueda hacer...\n";
+                    writeDialogs(dialog);
+                    system("pause");
+                    system("cls");
+
+                    dialog = player->getName() + ": Espero nos volvamos a ver...\n";
+                    writeDialogs(dialog);
+                    system("pause");
+                    system("cls");
+
+                    dialog = "Tal vez, asi sea algun dia muchacho. Mientras tanto, vive tu vida.\n";
+                    writeDialogs(dialog);
+                    system("pause");
+                    system("cls");
+
+                    player->inventario.delObjMision("Vomito de Gnomo Mutado Arcoiris");
+                    quest[1] = finall;
+                }
+
+            }else if(x == 4 && y == 0){
+
+                if(maze[x][y].getfirstTime() && quest[1] == intro){
+
+                    string dialog = "Te encuentras a un gnomo... mutante?\n"
+                                    "Esta vomitado arco iris...\n";
+                    writeDialogs(dialog);
+                    system("pause");
+                    system("cls");
+                    maze[x][y].setfirstTime(false);
+                }
+                else if(maze[x][y].getfirstTime() && quest[1] == mid){
+
+                    string dialog = "Te encuentras a un gnomo... mutante?\n"
+                                    "Esta vomitado arco iris...\n";
+                    writeDialogs(dialog);
+                    system("pause");
+                    system("cls");
+
+                    dialog = "Es el gnomo del que hablaba CAIN.\n";
+                    writeDialogs(dialog);
+                    system("pause");
+                    system("cls");
+
+                    dialog = "Tomas el frasco que esta al lado para llevarle el vomito a CAIN.\n"
+                             "Intentas acercarte, pero te encuentras con un Transfugo que esta resguardando al gnomo magico...\n";
+                    writeDialogs(dialog);
+                    system("pause");
+                    system("cls");
+
+                    elementalFight();
+
+                    dialog = "Terminas de pelear con el Transfugo, y al fin tienes la oportunidad de agarrar el frasco con el vomito de arco iris del gnomo magico.\n";
+                    writeDialogs(dialog);
+                    system("pause");
+                    system("cls");
+
+                    player->inventario.addObjMision("Vomito de Gnomo Mutado Arcoiris", "Me recuerda a una caricatura...");
+
+                    dialog = "Objeto de mision Vomito de Gnomo Mutado Arcoiris aniadido al inventario.\n";
+                    writeDialogs(dialog);
+                    system("pause");
+                    system("cls");
+
+                    dialog = player->getName() + ": Espero que no sea demasiado tarde...\n";
+                    writeDialogs(dialog);
+                    system("pause");
+                    system("cls");
+
+                    quest[1] = mid2;
+                    maze[x][y].setfirstTime(false);
+
+                }else if(!maze[x][y].getfirstTime() && quest[1] == mid){
+
+                    string dialog = "Es el gnomo del que hablaba CAIN.\n";
+                    writeDialogs(dialog);
+                    system("pause");
+                    system("cls");
+
+                    dialog = "Tomas el frasco que esta al lado para llevarle el vomito a CAIN.\n"
+                             "Intentas acercarte, pero te encuentras con un Transfugo que esta resguardando al gnomo magico...\n";
+                    writeDialogs(dialog);
+                    system("pause");
+                    system("cls");
+
+                    elementalFight();
+
+                    dialog = "Terminas de pelear con el Transfugo, y al fin tienes la oportunidad de agarrar el frasco con el vomito de arco iris del gnomo magico.\n";
+                    writeDialogs(dialog);
+                    system("pause");
+                    system("cls");
+
+                    player->inventario.addObjMision("Vomito de Gnomo Mutado Arcoiris", "Me recuerda a una caricatura...");
+
+                    dialog = "Objeto de mision Vomito de Gnomo Mutado Arcoiris aniadido al inventario.\n";
+                    writeDialogs(dialog);
+                    system("pause");
+                    system("cls");
+
+                    dialog = player->getName() + ": Espero que no sea demasiado tarde...\n";
+                    writeDialogs(dialog);
+                    system("pause");
+                    system("cls");
+
+                    quest[1] = mid2;
+                    maze[x][y].setfirstTime(false);
+                }
+            }else if(x == 4 && y == 1){
+
+                if(maze[x][y].getfirstTime()){
+
+                    string dialog = "Estas en el pasillo, y lo unico que encuentras son cenizas y artilleria vieja, pero no hay nada util, asi que decides no tomar nada.\n";
+                    writeDialogs(dialog);
+                    system("pause");
+                    system("cls");
+                    maze[x][y].setfirstTime(false);
+                }
+
+            }else if(x == 4 && y == 2){
+
+                if(maze[x][y].getfirstTime() && !player->inventario.searchObjMision("Llave Final")){
+
+                    string dialog = "Te encuentras con una puerta colosal, y te das cuenta que tiene una pequenia abertura para meter una llave.\n";
+                    writeDialogs(dialog);
+                    system("pause");
+                    system("cls");
+
+                    dialog = "Parece ser la salida... Intentas abrirla pero, efectivamente, tiene llave.\n";
+                    writeDialogs(dialog);
+                    system("pause");
+                    system("cls");
+
+                    dialog = "Tambien te encuentras con una estatua de piedra cubierta de un liquido rojo, muy parecido a la sangre.\n"
+                             "Consideras que es parte de la decoracion del cuarto. Atras se encuentra un cuadro del REY CARMESI parado sobre un esqueleto.\n";
+                    writeDialogs(dialog);
+                    system("pause");
+                    system("cls");
+
+
+                    maze[x][y].setfirstTime(false);
+                }
+                else if(maze[x][y].getfirstTime() && player->inventario.searchObjMision("Llave Final")){
+
+                    string dialog = "Te encuentras con una puerta colosal, y te das cuenta que tiene una pequenia abertura para meter una llave.\n";
+                    writeDialogs(dialog);
+                    system("pause");
+                    system("cls");
+
+                    dialog = "Parece ser la salida... Intentas abrirla pero, efectivamente, tiene llave.\n";
+                    writeDialogs(dialog);
+                    system("pause");
+                    system("cls");
+
+                    dialog = "Tambien te encuentras con una estatua de piedra cubierta de un liquido rojo, muy parecido a la sangre.\n"
+                             "Consideras que es parte de la decoracion del cuarto. Atras se encuentra un cuadro del REY CARMESI parado sobre un esqueleto.\n";
+                    writeDialogs(dialog);
+                    system("pause");
+                    system("cls");
+
+                    dialog = "Pruebas abrir la enorme puerta con la llave que te dio CAIN...\n";
+                    writeDialogs(dialog);
+                    system("pause");
+                    system("cls");
+
+                    dialog = "Funciona... Parece que porfin saldras de aqui.\n";
+                    writeDialogs(dialog);
+                    system("pause");
+                    system("cls");
+
+                    dialog = "La enorme puerta esta abierta.\n";
+                    writeDialogs(dialog);
+                    system("pause");
+                    system("cls");
+
+                    player->inventario.delObjMision("Llave Final");
+                    maze[x][y].setfirstTime(false);
+                    maze[x][y].setWays(true, false, true, false);
+                }
+                else if(!maze[x][y].getfirstTime() && player->inventario.searchObjMision("Llave Final")){
+
+                    string dialog = "Pruebas abrir la enorme puerta con la llave que te dio CAIN...\n";
+                    writeDialogs(dialog);
+                    system("pause");
+                    system("cls");
+
+                    dialog = "Funciona... Parece que porfin saldras de aqui.\n";
+                    writeDialogs(dialog);
+                    system("pause");
+                    system("cls");
+
+                    dialog = "La enorme puerta esta abierta.\n";
+                    writeDialogs(dialog);
+                    system("pause");
+                    system("cls");
+
+                    maze[x][y].setWays(true, false, true, false);
+                    player->inventario.delObjMision("Llave Final");
+                    maze[x][y].setfirstTime(false);
+                    maze[x][y].setWays(true, false, true, false);
+                }
+
+            }else if(x == 3 && y == 2){
+
+                string dialog = "La puerta roja se abre lentamente provocando un chirrido ensordecedor, logras darte cuenta que la habitacion es de forma circular y en el\n"
+                                "centro hay una GIGANTESCA estatua del REY CARMESI. En la cual el mismo esta posado sobre un esqueleto.\n";
                 writeDialogs(dialog);
                 system("pause");
                 system("cls");
 
-                elementalFight();
+                dialog = "DESCONOCIDO: Es admirable...\n\n"
+                         "Escuchas que una voz imponente que se oye desde la sombra que genera la estatua.\n";
+                writeDialogs(dialog);
+                system("pause");
+                system("cls");
+
+                dialog = "DESCONOCIDO: No muchos viajeros llegan hasta aqui.\n\n"
+                         "Dos ojos oscuros resaltan por el brillo. Una imponente figura se materializa frente a ti y con unos colosales pasos se muestra ante la luz.\n";
+                writeDialogs(dialog);
+                system("pause");
+                system("cls");
+
+                dialog = "Una delgada y muy alta persona con cara cara de buho se asoma, sus brazos son exageradamente largos y estan llenos de plumas,\n"
+                         "sus piernas tienen una especie de piel aspera y en lugar de pies tiene unas patas con tres dedos...\n";
+                writeDialogs(dialog);
+                system("pause");
+                system("cls");
+
+                dialog = "De la impresion das unos pasos hacia atras.\n\n";
+                writeDialogs(dialog);
+
+                int option = 0; bool passTree = false;
+
+                cout << "1)T-u..Tu eres el REY CARMESI?" << endl;
+                cout << "2)Emmm, e-estas bien?" << endl;
+                cout << "3)Eres horrible, ni en un millon de anios tu podrias ser el REY CARMESI." << endl << endl;
+                cout << "Respondes: ";
+                cin >> option;
+
+                while(!passTree){
+                    switch (option) {
+                        case 1: dialog = "REY CARMESI: Como todo tu trayecto hacia aqui, has acertado.\n"; passTree = true; break;
+                        case 2: dialog = "REY CARMESI: Yo..., me siento mejor que nunca ahora que has llegado.\n"; passTree = true; break;
+                        case 3: dialog = "REY CARMESI: CUIDA TU BOCA INSOLENTE!\n"; passTree = true; break;
+                        default:  option = 1 + (rand() % (3+1)-1);
+                    }
+                }
+
+                passTree = false;
+                system("cls");
+                writeDialogs(dialog);
+                system("pause");
+                system("cls");
+
+                dialog = "REY CARMESI: Yo soy el REY CARMESI y estoy aqui para felicitarte por tu victoria frente a mi laberinto.\n";
+                writeDialogs(dialog);
+                system("pause");
+                system("cls");
+
+                dialog = "El monarca se detiene a respirar y genera un sonido ahogado, como si cada bocanada de aire le costara mucho..., tose una vez y continua con su discurso.\n";
+                writeDialogs(dialog);
+                system("pause");
+                system("cls");
+
+                dialog = "REY CARMESI: Veo que estas impaciente por regresar a tu mundo, por lo que no te aburro mas con mucha palabreria, solo debes pararte\n"
+                         "sobre esa plataforma y con el cristal de mi cuello te enviare a casa...\n";
+                writeDialogs(dialog);
+                system("pause");
+                system("cls");
+
+                dialog = "Despues de escuchar esa noticia, te subes sobre la plataforma con emocion.\n";
+                writeDialogs(dialog);
+                system("pause");
+                system("cls");
+
+                dialog = "REY CARMESI: Listo, muy bien 1,2, y....\n";
+                writeDialogs(dialog);
+                system("pause");
+                system("cls");
+
+                dialog = "De la plataforma salen unas cadenas que se enganchan a tu cuello y brazos las cuales te tiran al suelo.\n"
+                         "El REY CARMESI cambia su semblante por completo y genera una tetrica sonrisa de la cual un liquido negro sale de su boca.\n";
+                writeDialogs(dialog);
+                system("pause");
+                system("cls");
+
+                dialog = "Con tu caida tu linterna se suelta de tus manos y alumbra detras de la estatua, lo que a la vez te congela por completo.\n"
+                         "Una pila de cientos o inclusive miles de esqueletos se encuentra detras de la estatua, el liquido que cae del pico del rey\n"
+                         "se arrastra hacia uno de los esqueletos y se extiende por su interior, poco a poco el conjunto de huesos se incorpora lanzando un grito atronador,\n"
+                         "has precenciado el nacimiento de un Transfugo.\n\n";
+                writeDialogs(dialog);
+                system("pause");
+                system("cls");
+
+                dialog = "REY CARMESI: PoR FiNNnnnnnnnn, Si lLeGaBAS uN pOCO MAsss tarDEE HuBierRA MuERTTo De HamBREEEEE\n\n";
+                writeDialogs(dialog);
+
+                cout << "1)Que es esto?!" << endl;
+                cout << "2)Que esta pasando?!" << endl;
+                cout << "3)Alejate! Aqueroso ser!" << endl << endl;
+                cout << "Respondes: ";
+                cin >> option;
+
+                while(!passTree){
+                    switch (option) {
+                        case 1: dialog = "REY CARMESI: yA nO hAy cAmInO, vIaJeRo...\n"; passTree = true; break;
+                        case 2: dialog = "REY CARMESI: nO lO eTiEnDes o si?\n"; passTree = true; break;
+                        case 3: dialog = "REY CARMESI: eS InEvItAbLe...\n"; passTree = true; break;
+                        default:  option = 1 + (rand() % (3+1)-1);
+                    }
+                }
+
+                passTree = false;
+                system("cls");
+                writeDialogs(dialog);
+                system("pause");
+                system("cls");
+
+                dialog = "El REY CARMESI recupera un poco la compostura y sigue.\n";
+                writeDialogs(dialog);
+                system("pause");
+                system("cls");
+
+                dialog = "REY CARMESI: Durante siglos miles de viajeros llegaron a mi laberinto y me sirvieron como alimento,\n"
+                         "pero de un momento a otro dejaron de llegar, no se por que mi magia ya no los atraia hacia mi...\n";
+                writeDialogs(dialog);
+                system("pause");
+                system("cls");
+
+                dialog = "REY CARMESI: Y por eso me comence a morir de hambre,... cuando estaba por perecer tome una decision necesaria,\n"
+                         "les dije a todos los habitantes del laberinto que evacuaran... pero en realidad solo los traje aqui para alimentarme de ellos y no morir de hambre.\n"
+                         "Pero eso solo me dio un poco mas de tiempo\n\n";
+                writeDialogs(dialog);
+                system("pause");
+                system("cls");
+
+
+                dialog = "REY CARMESI: Cuando crei que ya no tenia salvacion... llegaste TU\n"
+                         "y encendiste una chispa de esperanza en mi para sobrevivir al menos un poco mas.\n\n";
+                writeDialogs(dialog);
+
+                cout << "1)Eres un monstruo, mentiste sobre ese cuento de los pueblos unidos..." << endl;
+                cout << "2)Pero... por que todavia existe el laberinto si estas tan debil?" << endl;
+                cout << "3)Solo me mentiste con un poco de esperanza para terminar conmigo asi?!" << endl << endl;
+                cout << "Respondes: ";
+                cin >> option;
+
+                while(!passTree){
+                    switch (option) {
+                        case 1: dialog = "REY CARMESI: Tal vez..., pero todos estamos dispuestos a hacer lo que sea para sobrevivir, si ese es el caso, todos somos un monstruo por dentro.\n"; passTree = true; break;
+                        case 2: dialog = "REY CARMESI: Necesitaba que llegaras a mi por el camino correcto, de lo contrario tu espiritu no estaria puro para alimentarme de el...\n"; passTree = true; break;
+                        case 3: dialog = "REY CARMESI: No te sientas mal... lo hice con miles de personas.\n"; passTree = true; break;
+                        default:  option = 1 + (rand() % (3+1)-1);
+                    }
+                }
+
+                passTree = false;
+                system("cls");
+                writeDialogs(dialog);
+                system("pause");
+                system("cls");
+
+                dialog = "Cada vez que lograste pasar una etapa de mi laberinto destruia la anterior para no gastar mi energia y aguantar mas...\n\n";
+                writeDialogs(dialog);
+
+                cout << "1)Y los ultimos seres que vivian en el laberinto?!" << endl;
+                cout << "2)Que les hiciste a todos los demas?!" << endl;
+                cout << "3)Por que no terminaste con los demas que vivian aqui?!" << endl << endl;
+                cout << "Respondes: ";
+                cin >> option;
+
+                while(!passTree){
+                    switch (option) {
+                        case 1: dialog = "REY CARMESI: Esos traidores...\n"; passTree = true; break;
+                        case 2: dialog = "REY CARMESI: No me sirven asi...\n"; passTree = true; break;
+                        case 3: dialog = "REY CARMESI:No crees que queria?\n"; passTree = true; break;
+                        default:  option = 1 + (rand() % (3+1)-1);
+                    }
+                }
+
+                passTree = false;
+                system("cls");
+                writeDialogs(dialog);
+                system("pause");
+                system("cls");
+
+                dialog = "REY CARMESI: Para que pueda alimentarme de un ser es necesario que este haya pasado primero por el laberinto para purificar su espiritu y pueda alimentarme de ese ser...\n"
+                         "PERO ESOS MALDITOS TRAIDORES NO QUISIERON ABANDONAR EL LABERINTO Y NO ME PODIA ALIMENTAR DE ELLOS ASI!\n";
+                writeDialogs(dialog);
+                system("pause");
+                system("cls");
+
+                dialog = "REY CARMESI: Hasta el ultimo viajero que paso por aqui... DECIDIO QUEDARSE A VIVIR EN EL MALDITO LABERINTO Y VOLVERSE UN ERRANTE!,\n"
+                         "es por eso que cree los Transfugos, para intentar correrlos del laberinto y venir hacia aqui para devorarlos, pero ahora no me importan,\n"
+                         "por que cuando destrui el laberinto a tu paso lo mas probable es que hayan muerto...\n\n";
+                writeDialogs(dialog);
+                system("pause");
+                system("cls");
+
+                dialog = "El REY CARMESI se posa detras de ti y sujeta tu cuello con un poco de la sustancia oscura que cae de su pico a tu cara...\n";
+                writeDialogs(dialog);
+                system("pause");
+                system("cls");
+
+                dialog = "REY CARMESI: Pero creo que es momento de decir adios viajero... por que llego la hora de alimentarme...\n";
+                writeDialogs(dialog);
+                system("pause");
+                system("cls");
+
+                dialog = "El REY CARMESI abre su pico por completo y se acerca para devorarte.\n";
+                writeDialogs(dialog);
+                system("pause");
+                system("cls");
+
+                dialog = "Lanzas un grito de desesperacion y por mas que intentas moverte no logras nada...\n";
+                writeDialogs(dialog);
+                system("pause");
+                system("cls");
+
+                dialog = "De pronto un sonido en seco golpea la puerta, el REY CARMESI se detiene y voltea a ver el origen del sonido.\n";
+                writeDialogs(dialog);
+                system("pause");
+                system("cls");
+
+                dialog = "Un grupo de quejidos se escucha detras de la puerta y despues de un ultimo golpe la puerta cae hecha pedazos, de la misma se asoman 5 siluetas:\n"
+                         "WINKLIPET el Gnomo\n"
+                         "VILTRO el Leniador\n"
+                         "CIEDA la Costurera\n"
+                         "ICICLES el Mercader\n"
+                         "y por ultimo CAIN el Errante...\n\n"
+                         "Entran de un salto al cuarto, todos dirigen la mirada al \"Rey\" y lanzan un grito de miedo al ver la forma que este tiene.\n\n";
+                writeDialogs(dialog);
+                system("pause");
+                system("cls");
+
+                dialog = "CIEDA: QUE ES ESA COSA?!\n";
+                writeDialogs(dialog);
+                system("pause");
+                system("cls");
+
+                dialog = "REY CARMESI: INSOLENTE SUBORDINADA! INCLINATE ANTE TU REY!!\n\n"
+                         "VILTRO: TU NO ERES NUESTRO REY, EL REY CARMESI ES UN SER LLENO DE BELLEZA QUE TRAJO LA PAZ EN NUESTRO REINO!\n\n"
+                         "REY CARMESI: ESA ES LA FORMA QUE TOMABA FRENTE AL REINO, PERO CUANDO ME AYUDARON A CONSTRUIR ESTE LABERINTO SOLO ME SIRVIERON COMO ALIMENTO.\n\n";
+                writeDialogs(dialog);
+                system("pause");
+                system("cls");
+
+
+                dialog = "WINKLIPET: Te maldigo asqueroso ser, tu cabeza la colgare en un arbol en lo alto por tus crimenes!\n\n"
+                         "CAIN: ME ARRANCASTE DE MI MUNDO SOLO PARA SER ALIMENTO!? TE MATARE!\n\n";
+                writeDialogs(dialog);
+                system("pause");
+                system("cls");
+
+                dialog = "El rey extiende sus brazos y corre hacia el grupo de gente, con mucha agilidad todos escapan de sus garras,\n"
+                         "CIEDA intenta lanzar agujas al ser amorfo que es el Rey mientras que VILTRO lo golpea con su hacha de obsidiana, los demas se acercan hacia ti con rapidez y cada uno te quita una cadena.\n";
+                writeDialogs(dialog);
+                system("pause");
+                system("cls");
+
+                dialog = "CAIN: Creo que necesitaras esto...\n\n"
+                         "Dice CAIN acercandote tu mochila con los frascos elementales.\n";
+                writeDialogs(dialog);
+                system("pause");
+                system("cls");
+
+                dialog = "ICICLES: Pero sera mas practico si los combinas con esto.\n\n"
+                         "ICICLES te lanza una especie de espada de plata que al chocar con los frascos se fusionan entregandote una espada de color blanco.\n";
+                writeDialogs(dialog);
+                system("pause");
+                system("cls");
+
+
+                dialog = "ICICLES: Cuando estuviste en mi tienda esperaba que no me preguntaras por este objeto por que es lo mas valiosos que tengo, pero ahora creo que eso queda de lado.\n\n"
+                         "La espada es ligera y la levantas algo confundido, de un segundo a otro la espada se prende en fuego, despues se congela y despues se hace de un material liquido...\n";
+                writeDialogs(dialog);
+                system("pause");
+                system("cls");
+
+                dialog = "La CIEDA y VILTRO salen volando por encima de los tres y caen detras de ti.\n";
+                writeDialogs(dialog);
+                system("pause");
+                system("cls");
+
+                dialog = "REY CARMESI: Es suficiente! ƆꓵƎꓤԀOS ꓥⱯƆIOS ꓶƎꓥⱯNꓕƎNƆƎ ⅄ ԀƎꓶƎƎN ԀOꓤ Sꓵ ꓤƎ⅄...\n";
+                writeDialogs(dialog);
+                system("pause");
+                system("cls");
+
+                dialog = "El rey pronuncia unas palabras en una lengua que no entiendes... y de inmediato los esqueletos detras de la estatua comienzan a levantarse,\n"
+                         "ahora se ven rodeados por cientos de Transfugos que amenazan con atacarlos.\n";
+                writeDialogs(dialog);
+                system("pause");
+                system("cls");
+
+                dialog = player->getName() + ": Encarguense de los Transfugos, el Rey es mio...\n";
+                writeDialogs(dialog);
+                system("pause");
+                system("cls");
+
+                dialog = "Todos en el grupo acienten y se adentran en batalla con todos los Transfugos.\n";
+                writeDialogs(dialog);
+                system("pause");
+                system("cls");
+
+                dialog = "REY CARMESI: Es inutil, todos terminaran siendo alimento...\n";
+                writeDialogs(dialog);
+                system("pause");
+                system("cls");
+
+
+                for(int i = 0; i<3; i++){
+                    writeDialogs("Pelea " + to_string((i+1)) + "\n");
+                    system("pause");
+                    system("cls");
+                    elementalFight();
+                }
+
+                dialog = "El REY CARMESI se empieza a hacer ceniza frente a todos los del grupo.\n\n"
+                         "REY CARMESI: ESTO NO ES EL FINAL! YO VOLVERE Y JURO QUE DEVORARE SUS ALMAAAS!\n";
+                writeDialogs(dialog);
+                system("pause");
+                system("cls");
+
+                dialog = "Lo que antes era el REY CARMESI ahora es solo un puniado de polvo, todos los recuerdos de quien eres vuelven a ti....\n";
+                writeDialogs(dialog);
+                system("pause");
+                system("cls");
+
+                dialog = player->getName() + ": Se quien soy!, ahora lo recuerdo.\n";
+
+                dialog = "CIEDA: Se termino?\n\n"
+                         "VILTRO: Somos libres?!\n\n"
+                         "WINKLIPET: Pero ahora... Que hacemos?\n\n";
+                writeDialogs(dialog);
+                system("pause");
+                system("cls");
+
+                dialog = "CAIN: Hace mucho que no estoy en el mundo, no se si me adapte...\n\n" +
+                          player->getName() + ": Por que no vienen conmigo? No vivo en un palacio pero los puedo ayudar a adaptarse.\n";
+                writeDialogs(dialog);
+                system("pause");
+                system("cls");
+
+                dialog = "Todos asienten y con algo de miedo se suben sobre la plataforma que antes te aprisiono pero ahora esta brilla de color azul y todo se vuelve blanco...\n"
+                         "De repente te encuentras viendo tu hogar, una bella casa de color azul que los espera a todos con las luces encendidas.\n";
+                writeDialogs(dialog);
+                system("pause");
+                system("cls");
+
+                this->ended = true;
+
+            }
+            else{ // Cuarto default
+
+                if(maze[x][y].getfirstTime()){
+
+                    string dialog = "Entras a una habitacion a oscuras, sacas tu linterna y te das cuenta que el candelabro se apago con todas las goteras que tiene el cuarto.\n"
+                                    "En el fondo un Transfugo se levanta de un charco de un liquido oscuro y corre hacia ti para atacarte...\n";
+                    writeDialogs(dialog);
+                    system("pause");
+                    system("cls");
+
+                    elementalFight();
+
+                    dialog = "El transfugo se hace polvo frente a ti...\n";
+                    writeDialogs(dialog);
+                    system("pause");
+                    system("cls");
+
+                    maze[x][y].setfirstTime(false);
+
+                }
             }
         }
 
@@ -1505,7 +2710,7 @@ class Fase1: public Laberinto{
                         if(transfugoAttack == ice){
                             fightEnd = true;
                             cout << "Elegiste agua..." << endl;
-                            cout << "El transfugo lanza hielo..." << endl << endl;
+                            cout << "El enemigo lanza hielo..." << endl << endl;
                             cout << "Haz perdido! Pierdes una vida... " << endl;
                             system("pause");
                             system("cls");
@@ -1515,14 +2720,14 @@ class Fase1: public Laberinto{
                         else if(transfugoAttack == fire){
                             fightEnd = true;
                             cout << "Elegiste agua..." << endl;
-                            cout << "El transfugo lanza fuego..." << endl << endl;
+                            cout << "El enemigo lanza fuego..." << endl << endl;
                             cout << "Haz ganado!" << endl;
                             system("pause");
                             system("cls");
                         }
                         else if(transfugoAttack == water){
                             cout << "Elegiste agua..." << endl;
-                            cout << "El transfugo lanza agua..." << endl << endl;
+                            cout << "El enemigo lanza agua..." << endl << endl;
                             cout << "Empate!" << endl;
                             cout << "Vuelve a elegir tu ataque..." << endl;
                             transfugoAttack = static_cast<Elementals>(0 + (rand() % (2 + 1)));
@@ -1535,7 +2740,7 @@ class Fase1: public Laberinto{
                         if(transfugoAttack == water){
                             fightEnd = true;
                             cout << "Elegiste fuego..." << endl;
-                            cout << "El transfugo lanza agua..." << endl << endl;
+                            cout << "El enemigo lanza agua..." << endl << endl;
                             cout << "Haz perdido! Pierdes una vida..." << endl;
                             system("pause");
                             system("cls");
@@ -1545,14 +2750,14 @@ class Fase1: public Laberinto{
                         else if(transfugoAttack == ice){
                             fightEnd = true;
                             cout << "Elegiste fuego..." << endl;
-                            cout << "El transfugo lanza hielo..." << endl << endl;
+                            cout << "El enemigo lanza hielo..." << endl << endl;
                             cout << "Haz ganado!" << endl;
                             system("pause");
                             system("cls");
                         }
                         else if(transfugoAttack == fire){
                             cout << "Elegiste fuego..." << endl;
-                            cout << "El transfugo lanza fuego..." << endl << endl;
+                            cout << "El enemigo lanza fuego..." << endl << endl;
                             cout << "Empate!" << endl;
                             cout << "Vuelve a elegir tu ataque..." << endl;
                             transfugoAttack = static_cast<Elementals>(0 + (rand() % (2 + 1)));
@@ -1565,7 +2770,7 @@ class Fase1: public Laberinto{
                         if(transfugoAttack == fire){
                             fightEnd = true;
                             cout << "Elegiste hielo..." << endl;
-                            cout << "El transfugo lanza fuego..." << endl << endl;
+                            cout << "El enemigo lanza fuego..." << endl << endl;
                             cout << "Haz perdido! Pierdes una vida..." << endl;
                             system("pause");
                             system("cls");
@@ -1575,14 +2780,14 @@ class Fase1: public Laberinto{
                         else if(transfugoAttack == water){
                             fightEnd = true;
                             cout << "Elegiste hielo..." << endl;
-                            cout << "El transfugo lanza agua..." << endl << endl;
+                            cout << "El enemigo lanza agua..." << endl << endl;
                             cout << "Haz ganado!" << endl;
                             system("pause");
                             system("cls");
                         }
                         else if(transfugoAttack == ice){
                             cout << "Elegiste hielo..." << endl;
-                            cout << "El transfugo lanza hielo..." << endl << endl;
+                            cout << "El enemigo lanza hielo..." << endl << endl;
                             cout << "Empate!" << endl;
                             cout << "Vuelve a elegir tu ataque..." << endl;
                             transfugoAttack = static_cast<Elementals>(0 + (rand() % (2 + 1)));
@@ -1595,4 +2800,5 @@ class Fase1: public Laberinto{
             }while(!fightEnd);
 
         }
+
 };

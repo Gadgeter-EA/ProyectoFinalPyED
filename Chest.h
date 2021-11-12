@@ -44,7 +44,7 @@ class Chest {
             }
             else{
 
-                cout << "El cofre ya esta abierto" << endl;
+                cout << "El cofre ya esta abierto." << endl;
                 return NULL;
             }
         }

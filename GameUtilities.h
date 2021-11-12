@@ -76,6 +76,7 @@ public:
     int getShield();
     string getName();
     void increaseMaxShield();
+    void increaseMaxLife();
 };
 
 class Potion : public ObjInv{

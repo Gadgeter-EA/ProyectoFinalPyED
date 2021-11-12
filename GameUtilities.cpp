@@ -62,6 +62,10 @@ void Player::increaseMaxShield() {
     maxShield++;
 }
 
+void Player::increaseMaxLife() {
+    maxLife++;
+}
+
 Inventory::Inventory() {
     head = NULL;
     tail = NULL;
